@@ -1,0 +1,282 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import BeforeAfter from '../components/BeforeAfter.astro';
+import TestimonialCard from '../components/TestimonialCard.astro';
+
+const services = [
+  {
+    title: 'Yard Clean Up',
+    description: 'Get your yard looking great with our expert cleanup services. We handle everything from debris removal to hedge trimming.',
+    image: '/images/front-corner-after-edited.png',
+  },
+  {
+    title: 'Mulch Delivery & Installation',
+    description: 'Enhance your garden\'s health and curb appeal with our premium mulch delivery and installation services.',
+    image: '/images/mulch-delivery.jpg',
+  },
+  {
+    title: 'Landscape Construction',
+    description: 'Transform your outdoor space with expert landscape construction — patios, water features, retaining walls, and more.',
+    image: '/images/landscape-costruction.png',
+  },
+  {
+    title: 'Pruning & Trimming',
+    description: 'Professional pruning and trimming to keep your landscape looking its best — shaping bushes, hedges, and trees.',
+    image: '/images/prunning-trimming.png',
+  },
+];
+
+const testimonials = [
+  {
+    quote: 'I highly recommend this company. If you are a red blooded American, you care about supporting a local company, you care about local small business development, and supporting young entrepreneurs…..this company is for you! They care about what they do, and believe in the value of working hard for their $….',
+    author: 'Robert F.',
+  },
+  {
+    quote: 'Yard boys did a great job with pruning all my bushes, tackling a forest of weeds, and putting down fresh mulch! They were patient and kind, gave a fair estimate, and finished it in a timely matter with great care. I was so happy with their work, I highly recommend them and plan to use them in the future!',
+    author: 'Michelle D.',
+  },
+  {
+    quote: 'The Yard Boys did a thorough job cleaning out overgrown bushes in our yard to make space for a new fence. They were very prompt in communicating with us throughout. We definitely recommend them!',
+    author: 'Stanley P.',
+  },
+];
+---
+
+<Layout title="Yard Boys — Professional Landscaping Services in PA">
+  <Navbar />
+
+  <main>
+    <!-- ═══════════ HERO ═══════════ -->
+    <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <!-- Parallax Background -->
+      <div
+        class="absolute inset-0 parallax-bg"
+        style="background-image: url('/images/hero-aerial.jpeg');"
+      ></div>
+      <div class="hero-overlay absolute inset-0"></div>
+
+      <!-- Floating particles -->
+      <div class="absolute inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute top-1/4 left-1/4 w-2 h-2 bg-forest-400/20 rounded-full animate-pulse"></div>
+        <div class="absolute top-1/3 right-1/3 w-3 h-3 bg-earth-400/20 rounded-full animate-pulse" style="animation-delay: 1s;"></div>
+        <div class="absolute bottom-1/3 left-1/3 w-2 h-2 bg-forest-300/20 rounded-full animate-pulse" style="animation-delay: 2s;"></div>
+      </div>
+
+      <div class="relative z-10 max-w-5xl mx-auto px-4 text-center">
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/10 text-white/80 text-sm font-medium mb-8 animate-fade-in">
+          <span class="w-2 h-2 rounded-full bg-forest-400 animate-pulse"></span>
+          Serving PA Since 2018
+        </div>
+
+        <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black text-white leading-[1.1] mb-6 animate-fade-in-up" style="animation-delay: 0.2s;">
+          Your Yard,<br />
+          <span class="text-gradient">Our Passion</span>
+        </h1>
+
+        <p class="text-lg sm:text-xl text-white/70 max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in-up" style="animation-delay: 0.4s;">
+          We do more than the competition. Yard Boys can take care of all of your landscaping needs — from cleanup to complete landscape construction.
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up" style="animation-delay: 0.6s;">
+          <a
+            href="/contact"
+            class="w-full sm:w-auto px-8 py-4 bg-forest-600 hover:bg-forest-500 text-white font-bold text-lg rounded-full transition-all duration-300 shadow-xl hover:shadow-forest-500/30 hover:-translate-y-1"
+            id="hero-cta-estimate"
+          >
+            Get a Free Estimate
+          </a>
+          <a
+            href="/services"
+            class="w-full sm:w-auto px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-semibold text-lg rounded-full backdrop-blur-sm border border-white/20 transition-all duration-300 hover:-translate-y-1"
+            id="hero-cta-services"
+          >
+            Our Services
+          </a>
+        </div>
+      </div>
+
+      <!-- Scroll indicator — outside content div, pinned to section bottom -->
+      <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 animate-bounce">
+        <svg class="w-6 h-6 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+        </svg>
+      </div>
+    </section>
+
+    <!-- ═══════════ SERVICES PREVIEW ═══════════ -->
+    <section id="services-preview" class="py-24 lg:py-32 bg-cream-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16" data-animate>
+          <span class="inline-block text-forest-600 text-sm font-semibold uppercase tracking-[0.2em] mb-4">What We Do</span>
+          <h2 class="text-4xl sm:text-5xl font-bold text-charcoal-700 mb-4">Our Services</h2>
+          <p class="text-charcoal-400 max-w-2xl mx-auto text-lg">
+            We do more than the competition. Yard Boys can take care of all of your landscaping needs!
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {services.map((service, i) => (
+            <ServiceCard
+              title={service.title}
+              description={service.description}
+              image={service.image}
+              delay={String((i + 1) * 100)}
+            />
+          ))}
+        </div>
+
+        <div class="text-center mt-12" data-animate>
+          <a href="/services" class="inline-flex items-center gap-2 px-8 py-4 bg-charcoal-700 hover:bg-charcoal-600 text-white font-semibold rounded-full transition-all duration-300 hover:-translate-y-1 shadow-lg">
+            View All Services
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ BEFORE / AFTER ═══════════ -->
+    <section id="before-after" class="py-24 lg:py-32 bg-white">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12" data-animate>
+          <span class="inline-block text-forest-600 text-sm font-semibold uppercase tracking-[0.2em] mb-4">See the Difference</span>
+          <h2 class="text-4xl sm:text-5xl font-bold text-charcoal-700 mb-4">Our Work Speaks</h2>
+          <p class="text-charcoal-400 max-w-xl mx-auto text-lg">
+            Drag the slider to see the transformation we deliver for our clients.
+          </p>
+        </div>
+
+        <BeforeAfter
+          beforeSrc="/images/fence-before.png"
+          afterSrc="/images/fence-after.png"
+          beforeAlt="Overgrown fence line before Yard Boys cleanup"
+          afterAlt="Clean, mulched fence line with new plantings after Yard Boys transformation"
+        />
+      </div>
+    </section>
+
+    <!-- ═══════════ ABOUT BLURB ═══════════ -->
+    <section id="about-preview" class="py-24 lg:py-32 relative overflow-hidden">
+      <!-- Parallax BG -->
+      <div
+        class="absolute inset-0 parallax-bg opacity-10"
+        style="background-image: url('/images/facade-5.png');"
+      ></div>
+
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <!-- Image -->
+          <div class="relative" data-animate="left">
+            <div class="rounded-2xl overflow-hidden shadow-2xl">
+              <img
+                src="/images/ron-mulch-job.jpg"
+                alt="Beautiful mulch installation by Yard Boys"
+                class="w-full h-[400px] object-cover"
+                loading="lazy"
+              />
+            </div>
+            <!-- Floating badge -->
+            <div class="absolute -bottom-6 -right-6 bg-forest-600 text-white px-6 py-4 rounded-2xl shadow-xl hidden sm:block">
+              <p class="text-3xl font-black">5+</p>
+              <p class="text-sm font-medium text-white/80">Years of Service</p>
+            </div>
+          </div>
+
+          <!-- Text -->
+          <div data-animate="right">
+            <span class="inline-block text-forest-600 text-sm font-semibold uppercase tracking-[0.2em] mb-4">Our Story</span>
+            <h2 class="text-4xl sm:text-5xl font-bold text-charcoal-700 mb-6">Built from the<br />Ground Up</h2>
+            <p class="text-charcoal-500 leading-relaxed mb-6">
+              The landscaping dream started when Jared and Joe were in high school getting ready to graduate and enter the real world. From 15 years old they have always found a way to provide landscaping services to their customers.
+            </p>
+            <p class="text-charcoal-500 leading-relaxed mb-8">
+              At the end of 2018, they started their own landscaping business called "Yard Boys" — a name from a friend, because they were always doing yard work. It stuck, customers loved it, and the rest is history.
+            </p>
+            <a
+              href="/about"
+              class="inline-flex items-center gap-2 px-8 py-4 border-2 border-forest-600 text-forest-600 hover:bg-forest-600 hover:text-white font-semibold rounded-full transition-all duration-300"
+              id="about-preview-cta"
+            >
+              Read Our Full Story
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ TESTIMONIALS ═══════════ -->
+    <section id="testimonials" class="py-24 lg:py-32 bg-cream-100">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16" data-animate>
+          <span class="inline-block text-forest-600 text-sm font-semibold uppercase tracking-[0.2em] mb-4">Testimonials</span>
+          <h2 class="text-4xl sm:text-5xl font-bold text-charcoal-700 mb-4">What People Are Saying</h2>
+          <div class="flex items-center justify-center gap-1 mb-2">
+            {Array.from({ length: 5 }).map(() => (
+              <svg class="w-5 h-5 text-earth-400" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+              </svg>
+            ))}
+          </div>
+          <p class="text-charcoal-400">5 out of 5 rating</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {testimonials.map((t, i) => (
+            <TestimonialCard
+              quote={t.quote}
+              author={t.author}
+              delay={String((i + 1) * 150)}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ CTA BANNER ═══════════ -->
+    <section id="cta-banner" class="relative py-24 lg:py-32 overflow-hidden">
+      <div
+        class="absolute inset-0 parallax-bg"
+        style="background-image: url('/images/front-walk-after.png');"
+      ></div>
+      <div class="absolute inset-0 bg-charcoal-900/80 backdrop-blur-sm"></div>
+
+      <div class="relative z-10 max-w-4xl mx-auto px-4 text-center">
+        <h2 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6" data-animate>
+          Ready to Transform<br />Your Yard?
+        </h2>
+        <p class="text-white/70 text-lg mb-8 max-w-xl mx-auto" data-animate data-delay="100">
+          Let Yard Boys handle all your landscaping needs. Call us today for a free estimate.
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4" data-animate data-delay="200">
+          <a
+            href="tel:2156961235"
+            class="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 bg-forest-600 hover:bg-forest-500 text-white font-bold text-xl rounded-full transition-all duration-300 shadow-xl hover:shadow-forest-500/30 hover:-translate-y-1"
+            id="cta-phone"
+          >
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+            </svg>
+            (215) 696-1235
+          </a>
+          <a
+            href="/contact"
+            class="w-full sm:w-auto px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-semibold text-lg rounded-full backdrop-blur-sm border border-white/20 transition-all duration-300 hover:-translate-y-1"
+            id="cta-contact"
+          >
+            Request a Free Estimate
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

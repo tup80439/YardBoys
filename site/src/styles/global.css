@@ -1,0 +1,152 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Smooth Scroll ──────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ─── Scroll Animation Base ──────────────────────────────────── */
+[data-animate] {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-animate="left"] {
+  transform: translateX(-40px);
+}
+
+[data-animate="right"] {
+  transform: translateX(40px);
+}
+
+[data-animate="scale"] {
+  transform: scale(0.92);
+}
+
+[data-animate].animate-in {
+  opacity: 1;
+  transform: translateY(0) translateX(0) scale(1);
+}
+
+/* ─── Stagger delays ─────────────────────────────────────────── */
+[data-delay="100"] { transition-delay: 100ms; }
+[data-delay="200"] { transition-delay: 200ms; }
+[data-delay="300"] { transition-delay: 300ms; }
+[data-delay="400"] { transition-delay: 400ms; }
+[data-delay="500"] { transition-delay: 500ms; }
+[data-delay="600"] { transition-delay: 600ms; }
+
+/* ─── Parallax ───────────────────────────────────────────────── */
+.parallax-bg {
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+@media (max-width: 768px) {
+  .parallax-bg {
+    background-attachment: scroll;
+  }
+}
+
+/* ─── img-comparison-slider overrides ────────────────────────── */
+img-comparison-slider {
+  --divider-width: 3px;
+  --divider-color: #4A7C2E;
+  --default-handle-opacity: 1;
+  --default-handle-shadow: 0 0 10px rgba(0,0,0,0.3);
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+img-comparison-slider::part(divider) {
+  background: #4A7C2E;
+}
+
+img-comparison-slider::part(handle) {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #4A7C2E;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+}
+
+/* ─── Custom Scrollbar ───────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1A1A2E;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4A7C2E;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #2D5016;
+}
+
+/* ─── Selection ──────────────────────────────────────────────── */
+::selection {
+  background: rgba(74, 124, 46, 0.3);
+  color: #fff;
+}
+
+/* ─── Body ───────────────────────────────────────────────────── */
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: #FFFDF7;
+  color: #1A1A2E;
+  overflow-x: hidden;
+}
+
+/* ─── Glassmorphism utility ──────────────────────────────────── */
+.glass {
+  background: rgba(255, 253, 247, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(74, 124, 46, 0.1);
+}
+
+.glass-dark {
+  background: rgba(26, 26, 46, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* ─── Gradient text ──────────────────────────────────────────── */
+.text-gradient {
+  background: linear-gradient(135deg, #4A7C2E, #6db54d, #D4A574);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Hero overlay ───────────────────────────────────────────── */
+.hero-overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(26, 26, 46, 0.55) 0%,
+    rgba(26, 26, 46, 0.7) 50%,
+    rgba(26, 26, 46, 0.85) 100%
+  );
+}
+
+/* ─── Page transition ────────────────────────────────────────── */
+@keyframes pageEnter {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+main {
+  animation: pageEnter 0.5s ease-out;
+}

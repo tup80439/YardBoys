@@ -1,0 +1,46 @@
+---
+interface Props {
+  beforeSrc: string;
+  afterSrc: string;
+  beforeAlt?: string;
+  afterAlt?: string;
+}
+
+const { beforeSrc, afterSrc, beforeAlt = 'Before', afterAlt = 'After' } = Astro.props;
+---
+
+<div class="before-after-wrapper relative" data-animate>
+  <div class="flex items-center gap-2 mb-4">
+    <div class="h-px flex-1 bg-gradient-to-r from-transparent to-forest-500/30"></div>
+    <span class="text-xs font-semibold uppercase tracking-[0.2em] text-forest-600">Drag to Compare</span>
+    <div class="h-px flex-1 bg-gradient-to-l from-transparent to-forest-500/30"></div>
+  </div>
+
+  <img-comparison-slider class="w-full rounded-2xl shadow-2xl">
+    <img slot="first" src={beforeSrc} alt={beforeAlt} class="w-full h-full object-cover" />
+    <img slot="second" src={afterSrc} alt={afterAlt} class="w-full h-full object-cover" />
+    <div slot="handle">
+      <div class="w-11 h-11 rounded-full bg-forest-600 border-[3px] border-white shadow-xl flex items-center justify-center cursor-grab active:cursor-grabbing">
+        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 9l4-4 4 4M8 15l4 4 4-4" />
+        </svg>
+      </div>
+    </div>
+  </img-comparison-slider>
+
+  <!-- Labels -->
+  <div class="flex justify-between mt-3 px-2">
+    <span class="text-xs font-medium text-charcoal-500 uppercase tracking-wider flex items-center gap-1.5">
+      <span class="w-2 h-2 rounded-full bg-red-400/80"></span>
+      Before
+    </span>
+    <span class="text-xs font-medium text-charcoal-500 uppercase tracking-wider flex items-center gap-1.5">
+      After
+      <span class="w-2 h-2 rounded-full bg-forest-400"></span>
+    </span>
+  </div>
+</div>
+
+<script>
+  import 'img-comparison-slider';
+</script>

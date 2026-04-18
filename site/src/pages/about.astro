@@ -1,0 +1,219 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import TestimonialCard from '../components/TestimonialCard.astro';
+---
+
+<Layout title="Our Story — Yard Boys Landscaping" description="Learn about Jared and Joe, the founders of Yard Boys. From high school side hustlers to professional landscapers serving PA since 2018.">
+  <Navbar />
+
+  <main>
+    <!-- ═══════════ HERO ═══════════ -->
+    <section class="relative h-[60vh] min-h-[400px] flex items-center justify-center overflow-hidden">
+      <div
+        class="absolute inset-0 parallax-bg"
+        style="background-image: url('/images/front-corner-after-edited.png');"
+      ></div>
+      <div class="hero-overlay absolute inset-0"></div>
+
+      <div class="relative z-10 text-center px-4">
+        <span class="inline-block text-forest-300 text-sm font-semibold uppercase tracking-[0.2em] mb-4 animate-fade-in">About Us</span>
+        <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black text-white mb-6 animate-fade-in-up" style="animation-delay: 0.2s;">
+          Our Story
+        </h1>
+        <p class="text-white/70 text-lg max-w-xl mx-auto animate-fade-in-up" style="animation-delay: 0.4s;">
+          From a high school side hustle to a trusted landscaping company.
+        </p>
+      </div>
+    </section>
+
+    <!-- ═══════════ STORY ═══════════ -->
+    <section class="py-24 lg:py-32 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <!-- Images -->
+          <div class="relative" data-animate="left">
+            <div class="grid grid-cols-2 gap-4">
+              <div class="space-y-4">
+                <div class="rounded-2xl overflow-hidden shadow-xl">
+                  <img
+                    src="/images/mulch-delivery.jpg"
+                    alt="Yard Boys mulch delivery and installation"
+                    class="w-full h-48 object-cover"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rounded-2xl overflow-hidden shadow-xl">
+                  <img
+                    src="/images/facade-after-edited-1.png"
+                    alt="Beautiful curb appeal landscaping"
+                    class="w-full h-64 object-cover"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+              <div class="space-y-4 pt-8">
+                <div class="rounded-2xl overflow-hidden shadow-xl">
+                  <img
+                    src="/images/front-walk-after.png"
+                    alt="Front walk landscaping by Yard Boys"
+                    class="w-full h-64 object-cover"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="rounded-2xl overflow-hidden shadow-xl">
+                  <img
+                    src="/images/ron-mulch-job.jpg"
+                    alt="Professional mulch installation"
+                    class="w-full h-48 object-cover"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Floating badge -->
+            <div class="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-forest-600 text-white px-8 py-4 rounded-2xl shadow-xl flex items-center gap-4 z-10">
+              <div class="text-center">
+                <p class="text-2xl font-black">2018</p>
+                <p class="text-xs font-medium text-white/80">Founded</p>
+              </div>
+              <div class="w-px h-10 bg-white/20"></div>
+              <div class="text-center">
+                <p class="text-2xl font-black">500+</p>
+                <p class="text-xs font-medium text-white/80">Yards of Mulch</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Story Text -->
+          <div data-animate="right">
+            <span class="inline-block text-forest-600 text-sm font-semibold uppercase tracking-[0.2em] mb-4">How It Started</span>
+            <h2 class="text-3xl sm:text-4xl font-bold text-charcoal-700 mb-8">Two Friends, One Dream</h2>
+
+            <div class="space-y-6 text-charcoal-500 leading-relaxed">
+              <p>
+                The landscaping dream started when Jared and Joe were in high school getting ready to graduate and enter the real world. We mowed our neighbors lawns as a side hustle for a little while also being employees of another landscaping company.
+              </p>
+              <p>
+                From 15 years old we have always found a way to provide landscaping services to our customers. Over those years we learned a lot from first hand experience, our coworkers and our boss.
+              </p>
+              <p>
+                At the end of 2018 we started to get so much sidework we decided to go off on our own and create a landscaping business called "Yard Boys". We got the name from a friend of ours because we were always doing yard work and it stuck.
+              </p>
+              <p>
+                We loved the name and decided it was perfect for our business — it was catchy and customers loved it too. When 2020 came around we really had to step up our game due to covid restrictions. This did not slow us down, we started building a client base and providing customers with any service we could think of.
+              </p>
+              <p class="font-medium text-charcoal-700">
+                Fast forward to today, Jared and Joe are still working together side by side on every project ensuring the integrity and quality of each yard we come across.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ VALUES ═══════════ -->
+    <section class="py-24 lg:py-32 bg-cream-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16" data-animate>
+          <span class="inline-block text-forest-600 text-sm font-semibold uppercase tracking-[0.2em] mb-4">Our Values</span>
+          <h2 class="text-4xl sm:text-5xl font-bold text-charcoal-700">What Drives Us</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <!-- Detail Card -->
+          <div class="relative bg-white rounded-3xl p-10 shadow-lg hover:shadow-xl transition-all duration-500 group overflow-hidden" data-animate data-delay="100">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-forest-500/5 rounded-full -translate-y-1/2 translate-x-1/2 group-hover:scale-150 transition-transform duration-700"></div>
+
+            <div class="relative">
+              <div class="w-16 h-16 bg-forest-100 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-forest-200 transition-colors duration-300">
+                <svg class="w-8 h-8 text-forest-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+              <h3 class="text-2xl font-bold text-charcoal-700 mb-4">We Care About the Details!</h3>
+              <p class="text-charcoal-500 leading-relaxed">
+                Our company pays special attention to the details of every project to ensure the complete satisfaction of each client. Our goal is to enhance the exterior of your home, raise your property value, and beautify your whole neighborhood.
+              </p>
+            </div>
+          </div>
+
+          <!-- Satisfaction Card -->
+          <div class="relative bg-white rounded-3xl p-10 shadow-lg hover:shadow-xl transition-all duration-500 group overflow-hidden" data-animate data-delay="200">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-earth-400/5 rounded-full -translate-y-1/2 translate-x-1/2 group-hover:scale-150 transition-transform duration-700"></div>
+
+            <div class="relative">
+              <div class="w-16 h-16 bg-earth-100 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-earth-200 transition-colors duration-300">
+                <svg class="w-8 h-8 text-earth-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h3 class="text-2xl font-bold text-charcoal-700 mb-4">Customer Satisfaction Guaranteed!</h3>
+              <p class="text-charcoal-500 leading-relaxed">
+                Your satisfaction is our priority and we strive to provide a service we are proud of. We start every project by providing a thorough consultation to understand your goals and the needs of the project. We do this to guarantee that the project is completed according to your preferences.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ RESIDENTIAL & COMMERCIAL ═══════════ -->
+    <section class="relative py-24 lg:py-32 overflow-hidden">
+      <div
+        class="absolute inset-0 parallax-bg"
+        style="background-image: url('/images/hero-aerial.jpeg');"
+      ></div>
+      <div class="absolute inset-0 bg-charcoal-900/85"></div>
+
+      <div class="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center" data-animate>
+          <h2 class="text-4xl sm:text-5xl font-bold text-white mb-6">Residential & Commercial</h2>
+          <p class="text-white/70 text-xl max-w-3xl mx-auto mb-12 leading-relaxed">
+            Yard Boys provides comprehensive care to both residential and commercial properties. No matter how big or small the job is, we deliver!
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-3xl mx-auto">
+            <div class="text-center" data-animate data-delay="100">
+              <div class="text-4xl font-black text-forest-400 mb-2">500+</div>
+              <p class="text-white/60 text-sm font-medium">Yards of Mulch Per Spring</p>
+            </div>
+            <div class="text-center" data-animate data-delay="200">
+              <div class="text-4xl font-black text-forest-400 mb-2">5+</div>
+              <p class="text-white/60 text-sm font-medium">Years in Business</p>
+            </div>
+            <div class="text-center" data-animate data-delay="300">
+              <div class="text-4xl font-black text-forest-400 mb-2">⭐ 5.0</div>
+              <p class="text-white/60 text-sm font-medium">Customer Rating</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════ CTA ═══════════ -->
+    <section class="py-24 lg:py-32 bg-cream-50">
+      <div class="max-w-3xl mx-auto px-4 text-center" data-animate>
+        <h2 class="text-4xl sm:text-5xl font-bold text-charcoal-700 mb-6">Ready to Work With Us?</h2>
+        <p class="text-charcoal-400 text-lg mb-8">
+          Reach out today for a free consultation and estimate. We'd love to hear about your project.
+        </p>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <a href="tel:2156961235" class="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 bg-forest-600 hover:bg-forest-500 text-white font-bold text-lg rounded-full transition-all duration-300 shadow-xl hover:-translate-y-1">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+            </svg>
+            (215) 696-1235
+          </a>
+          <a href="/contact" class="w-full sm:w-auto px-8 py-4 border-2 border-forest-600 text-forest-600 hover:bg-forest-600 hover:text-white font-semibold rounded-full transition-all duration-300">
+            Contact Us
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
