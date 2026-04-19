@@ -227,15 +227,103 @@ const serviceOptions = [
 </Layout>
 
 <script>
-  function initForm() {
-    const form = document.getElementById('estimate-form') as HTMLFormElement;
-    const successMsg = document.getElementById('form-success');
+  import { initForm as initFormspree } from '@formspree/ajax';
 
-    form?.addEventListener('submit', (e) => {
-      e.preventDefault();
-      // In production, this would send to a backend / form service
-      form.style.display = 'none';
-      successMsg?.classList.remove('hidden');
+  const FORMSPREE_FORM_ID = 'xpqkrjkp';
+
+  function initForm() {
+    const form = document.getElementById('estimate-form') as HTMLFormElement | null;
+    const statusMsg = document.getElementById('form-success') as HTMLDivElement | null;
+    const statusIcon = statusMsg?.querySelector('svg') as SVGElement | null;
+    const statusTitle = statusMsg?.querySelector('h3') as HTMLHeadingElement | null;
+    const statusBody = statusMsg?.querySelector('p') as HTMLParagraphElement | null;
+    const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement | null;
+    const submitLabel = submitBtn?.querySelector('span') as HTMLSpanElement | null;
+
+    if (!form || !statusMsg || form.dataset.formInitialized === 'true') return;
+    form.dataset.formInitialized = 'true';
+
+    const firstNameInput = form.querySelector('#first-name') as HTMLInputElement | null;
+    const lastNameInput = form.querySelector('#last-name') as HTMLInputElement | null;
+    const emailInput = form.querySelector('#email') as HTMLInputElement | null;
+    const phoneInput = form.querySelector('#phone, [name="phone"], input[type="tel"]') as HTMLInputElement | null;
+    const addressInput = form.querySelector('#address') as HTMLInputElement | null;
+    const messageInput = form.querySelector('#message') as HTMLTextAreaElement | null;
+
+    const setStatus = (type: 'success' | 'error', message: string) => {
+      statusMsg.classList.remove('hidden');
+
+      if (type === 'success') {
+        statusMsg.classList.remove('bg-red-50', 'border-red-200');
+        statusMsg.classList.add('bg-forest-50', 'border-forest-200');
+        statusTitle?.classList.remove('text-red-700');
+        statusTitle?.classList.add('text-forest-700');
+        statusBody?.classList.remove('text-red-600');
+        statusBody?.classList.add('text-forest-600');
+        statusIcon?.classList.remove('hidden', 'text-red-500');
+        statusIcon?.classList.add('text-forest-500');
+        if (statusTitle) statusTitle.textContent = 'Thank You!';
+      } else {
+        statusMsg.classList.remove('bg-forest-50', 'border-forest-200');
+        statusMsg.classList.add('bg-red-50', 'border-red-200');
+        statusTitle?.classList.remove('text-forest-700');
+        statusTitle?.classList.add('text-red-700');
+        statusBody?.classList.remove('text-forest-600');
+        statusBody?.classList.add('text-red-600');
+        statusIcon?.classList.add('hidden');
+        if (statusTitle) statusTitle.textContent = 'Something went wrong';
+      }
+
+      if (statusBody) statusBody.textContent = message;
+    };
+
+    initFormspree({
+      formElement: form,
+      formId: FORMSPREE_FORM_ID,
+      origin: 'https://formspree.io',
+      useDefaultStyles: false,
+      data: {
+        name: () => {
+          const fullName = [firstNameInput?.value.trim(), lastNameInput?.value.trim()]
+            .filter(Boolean)
+            .join(' ');
+          return fullName || undefined;
+        },
+        email: () => emailInput?.value.trim() || undefined,
+        phone: () => phoneInput?.value.trim() || undefined,
+        address: () => addressInput?.value.trim() || undefined,
+        message: () => messageInput?.value.trim() || undefined,
+      },
+      onSubmit: () => {
+        statusMsg.classList.add('hidden');
+        submitBtn?.setAttribute('disabled', 'true');
+        submitBtn?.classList.add('opacity-80', 'cursor-not-allowed');
+        if (submitLabel) submitLabel.textContent = 'Sending...';
+      },
+      onSuccess: () => {
+        setStatus('success', "We'll get back to you as soon as possible.");
+        form.reset();
+      },
+      onError: (_context, error) => {
+        const formErrorMessage = error.getFormErrors()[0]?.message;
+        setStatus('error', formErrorMessage || 'Please check your entries and try again.');
+      },
+      onFailure: () => {
+        setStatus('error', 'Unable to send right now. Please try again in a moment.');
+      },
+      enable: () => {
+        submitBtn?.removeAttribute('disabled');
+        submitBtn?.classList.remove('opacity-80', 'cursor-not-allowed');
+        if (submitLabel) submitLabel.textContent = 'Submit Request';
+      },
+      disable: () => {
+        submitBtn?.setAttribute('disabled', 'true');
+        submitBtn?.classList.add('opacity-80', 'cursor-not-allowed');
+        if (submitLabel) submitLabel.textContent = 'Sending...';
+      },
+      renderSuccess: () => {},
+      renderFormError: () => {},
+      renderFieldErrors: () => {},
     });
   }
 
