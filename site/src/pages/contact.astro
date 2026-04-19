@@ -104,6 +104,8 @@ const serviceOptions = [
               </div>
 
               <form id="estimate-form" class="space-y-6">
+                <input type="hidden" id="full-name" name="name" />
+                <input type="hidden" id="form-phone" name="phone" />
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div>
                     <label for="first-name" class="block text-charcoal-600 text-sm font-semibold mb-2">
@@ -247,8 +249,39 @@ const serviceOptions = [
     const lastNameInput = form.querySelector('#last-name') as HTMLInputElement | null;
     const emailInput = form.querySelector('#email') as HTMLInputElement | null;
     const phoneInput = form.querySelector('#phone, [name="phone"], input[type="tel"]') as HTMLInputElement | null;
+    const fullNameInput = form.querySelector('#full-name') as HTMLInputElement | null;
+    const hiddenPhoneInput = form.querySelector('#form-phone') as HTMLInputElement | null;
     const addressInput = form.querySelector('#address') as HTMLInputElement | null;
     const messageInput = form.querySelector('#message') as HTMLTextAreaElement | null;
+
+    // Keep Formspree payload keys canonical (especially email/name/phone).
+    const syncFormspreePayload = () => {
+      if (emailInput) {
+        emailInput.name = 'email';
+        emailInput.value = emailInput.value.trim();
+      }
+
+      if (fullNameInput) {
+        fullNameInput.value = [firstNameInput?.value.trim(), lastNameInput?.value.trim()]
+          .filter(Boolean)
+          .join(' ');
+      }
+
+      if (hiddenPhoneInput) {
+        hiddenPhoneInput.value = phoneInput?.value.trim() || '';
+      }
+
+      if (addressInput) addressInput.value = addressInput.value.trim();
+      if (messageInput) messageInput.value = messageInput.value.trim();
+    };
+
+    form.addEventListener(
+      'submit',
+      () => {
+        syncFormspreePayload();
+      },
+      { capture: true }
+    );
 
     const setStatus = (type: 'success' | 'error', message: string) => {
       statusMsg.classList.remove('hidden');
@@ -282,19 +315,8 @@ const serviceOptions = [
       formId: FORMSPREE_FORM_ID,
       origin: 'https://formspree.io',
       useDefaultStyles: false,
-      data: {
-        name: () => {
-          const fullName = [firstNameInput?.value.trim(), lastNameInput?.value.trim()]
-            .filter(Boolean)
-            .join(' ');
-          return fullName || undefined;
-        },
-        email: () => emailInput?.value.trim() || undefined,
-        phone: () => phoneInput?.value.trim() || undefined,
-        address: () => addressInput?.value.trim() || undefined,
-        message: () => messageInput?.value.trim() || undefined,
-      },
       onSubmit: () => {
+        syncFormspreePayload();
         statusMsg.classList.add('hidden');
         submitBtn?.setAttribute('disabled', 'true');
         submitBtn?.classList.add('opacity-80', 'cursor-not-allowed');
