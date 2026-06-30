@@ -16,26 +16,28 @@ const { beforeSrc, afterSrc, beforeAlt = 'Before', afterAlt = 'After' } = Astro.
     <div class="h-px flex-1 bg-gradient-to-l from-transparent to-forest-500/30"></div>
   </div>
 
-  <div class="relative rounded-2xl overflow-hidden shadow-2xl">
-    <!-- Labels -->
-    <span class="absolute top-4 left-4 z-10 px-3 py-1 text-xs font-bold uppercase tracking-wider bg-black/60 backdrop-blur-sm text-white rounded-full flex items-center gap-1.5 border border-white/10 select-none">
-      <span class="w-1.5 h-1.5 rounded-full bg-red-400"></span>
-      Before
-    </span>
-    <span class="absolute bottom-4 right-4 z-10 px-3 py-1 text-xs font-bold uppercase tracking-wider bg-forest-600/90 backdrop-blur-sm text-white rounded-full flex items-center gap-1.5 border border-white/10 select-none">
-      After
-      <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
-    </span>
-
-    <img-comparison-slider class="w-full" direction="vertical">
-      <img slot="first" src={beforeSrc} alt={beforeAlt} class="w-full h-full object-cover" />
-      <img slot="second" src={afterSrc} alt={afterAlt} class="w-full h-full object-cover" />
-      <div slot="handle" class="w-11 h-11 flex items-center justify-center cursor-grab active:cursor-grabbing">
+  <img-comparison-slider class="w-full rounded-2xl shadow-2xl" direction="vertical">
+    <img slot="first" src={beforeSrc} alt={beforeAlt} class="w-full h-full object-cover" />
+    <img slot="second" src={afterSrc} alt={afterAlt} class="w-full h-full object-cover" />
+    <div slot="handle">
+      <div class="w-11 h-11 rounded-full bg-forest-600 border-[3px] border-white shadow-xl flex items-center justify-center cursor-grab active:cursor-grabbing">
         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 9l5-5 5 5M7 15l5 5 5-5" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 8l4-4-4-4M9 8L5 4l4-4" transform="rotate(90 12 12)" />
         </svg>
       </div>
-    </img-comparison-slider>
+    </div>
+  </img-comparison-slider>
+
+  <!-- Labels -->
+  <div class="flex justify-between mt-3 px-2">
+    <span class="text-xs font-medium text-charcoal-500 uppercase tracking-wider flex items-center gap-1.5">
+      <span class="w-2 h-2 rounded-full bg-red-400/80"></span>
+      Before
+    </span>
+    <span class="text-xs font-medium text-charcoal-500 uppercase tracking-wider flex items-center gap-1.5">
+      After
+      <span class="w-2 h-2 rounded-full bg-forest-400"></span>
+    </span>
   </div>
 </div>
 

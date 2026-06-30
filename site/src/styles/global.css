@@ -69,9 +69,6 @@ img-comparison-slider::part(divider) {
 }
 
 img-comparison-slider::part(handle) {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   width: 44px;
   height: 44px;
   border-radius: 50%;
