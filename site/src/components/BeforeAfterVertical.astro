@@ -18,11 +18,11 @@ const { beforeSrc, afterSrc, beforeAlt = 'Before', afterAlt = 'After' } = Astro.
 
   <div class="relative rounded-2xl overflow-hidden shadow-2xl">
     <!-- Labels -->
-    <span class="absolute top-4 left-4 z-10 px-3 py-1 text-xs font-bold uppercase tracking-wider bg-black/60 backdrop-blur-sm text-white rounded-full flex items-center gap-1.5 border border-white/10 select-none">
+    <span data-label="before" class="ba-label absolute top-4 left-4 z-10 px-3 py-1 text-xs font-bold uppercase tracking-wider bg-black/60 backdrop-blur-sm text-white rounded-full flex items-center gap-1.5 border border-white/10 select-none">
       <span class="w-1.5 h-1.5 rounded-full bg-red-400"></span>
       Before
     </span>
-    <span class="absolute bottom-4 right-4 z-10 px-3 py-1 text-xs font-bold uppercase tracking-wider bg-forest-600/90 backdrop-blur-sm text-white rounded-full flex items-center gap-1.5 border border-white/10 select-none">
+    <span data-label="after" class="ba-label absolute bottom-4 right-4 z-10 px-3 py-1 text-xs font-bold uppercase tracking-wider bg-forest-600/90 backdrop-blur-sm text-white rounded-full flex items-center gap-1.5 border border-white/10 select-none">
       After
       <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
     </span>
@@ -30,7 +30,8 @@ const { beforeSrc, afterSrc, beforeAlt = 'Before', afterAlt = 'After' } = Astro.
     <img-comparison-slider class="w-full" direction="vertical">
       <img slot="first" src={beforeSrc} alt={beforeAlt} class="w-full h-full object-cover" />
       <img slot="second" src={afterSrc} alt={afterAlt} class="w-full h-full object-cover" />
-      <div slot="handle" class="w-11 h-11 flex items-center justify-center cursor-grab active:cursor-grabbing">
+      <!-- Counter-rotate -90deg to undo library's shadow DOM rotate(90deg) on vertical handles -->
+      <div slot="handle" class="w-11 h-11 flex items-center justify-center cursor-grab active:cursor-grabbing" style="transform: rotate(-90deg)">
         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 9l5-5 5 5M7 15l5 5 5-5" />
         </svg>
@@ -48,6 +49,15 @@ const { beforeSrc, afterSrc, beforeAlt = 'Before', afterAlt = 'After' } = Astro.
 </div>
 
 <style>
+  .ba-label {
+    transition: opacity 0.25s ease;
+  }
+
+  .ba-label.ba-label-hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+
   .ba-vertical-toggle {
     display: none;
   }
@@ -90,25 +100,47 @@ const { beforeSrc, afterSrc, beforeAlt = 'Before', afterAlt = 'After' } = Astro.
 <script>
   import 'img-comparison-slider';
 
-  function initVerticalToggles() {
+  function initVerticalSliders() {
     document.querySelectorAll('.before-after-vertical-wrapper').forEach((wrapper) => {
       const slider = wrapper.querySelector('img-comparison-slider') as any;
       const toggle = wrapper.querySelector('.ba-vertical-toggle') as HTMLButtonElement | null;
+      const beforeLabel = wrapper.querySelector('[data-label="before"]') as HTMLElement | null;
+      const afterLabel = wrapper.querySelector('[data-label="after"]') as HTMLElement | null;
 
-      if (!slider || !toggle || toggle.dataset.init === 'true') return;
-      toggle.dataset.init = 'true';
+      if (!slider || slider.dataset.vertInit === 'true') return;
+      slider.dataset.vertInit = 'true';
 
-      let showingAfter = false;
+      // --- Label visibility tied to slider position ---
+      function updateLabels() {
+        const val = slider.value ?? 50;
+        if (beforeLabel) {
+          beforeLabel.classList.toggle('ba-label-hidden', val <= 5);
+        }
+        if (afterLabel) {
+          afterLabel.classList.toggle('ba-label-hidden', val >= 95);
+        }
+      }
 
-      toggle.addEventListener('click', () => {
-        showingAfter = !showingAfter;
-        // img-comparison-slider uses a "value" property (0–100) for position
-        slider.value = showingAfter ? 100 : 0;
-      });
+      slider.addEventListener('slide', updateLabels);
+      // Run once on init in case value starts at an extreme
+      updateLabels();
+
+      // --- Tap-to-toggle fallback ---
+      if (toggle && toggle.dataset.init !== 'true') {
+        toggle.dataset.init = 'true';
+
+        let showingAfter = false;
+
+        toggle.addEventListener('click', () => {
+          showingAfter = !showingAfter;
+          slider.value = showingAfter ? 100 : 0;
+          // Update labels after programmatic toggle
+          updateLabels();
+        });
+      }
     });
   }
 
-  initVerticalToggles();
-  document.addEventListener('astro:page-load', initVerticalToggles);
+  initVerticalSliders();
+  document.addEventListener('astro:page-load', initVerticalSliders);
 </script>
-

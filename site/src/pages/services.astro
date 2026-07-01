@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import BeforeAfter from '../components/BeforeAfter.astro';
 import BeforeAfterVertical from '../components/BeforeAfterVertical.astro';
+import Lightbox from '../components/Lightbox.astro';
 
 const services = [
   {
@@ -183,17 +184,17 @@ const services = [
           <p class="text-charcoal-400">Yard Boys provides comprehensive care to both residential and commercial properties.</p>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div class="rounded-xl overflow-hidden shadow-lg aspect-square" data-animate data-delay="100">
-            <img src="/images/patio-overgrowth-after.jpg" alt="Patio overgrowth cleanup project completed" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700" loading="lazy" />
+          <div class="rounded-xl overflow-hidden shadow-lg aspect-square cursor-pointer group" data-animate data-delay="100">
+            <img src="/images/patio-overgrowth-after.jpg" alt="Patio overgrowth cleanup project completed" class="lightbox-trigger w-full h-full object-cover hover:scale-110 transition-transform duration-700 cursor-pointer" loading="lazy" />
           </div>
-          <div class="rounded-xl overflow-hidden shadow-lg aspect-square" data-animate data-delay="200">
-            <img src="/images/front-walk-after.png" alt="Front walk landscaping project" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700" loading="lazy" />
+          <div class="rounded-xl overflow-hidden shadow-lg aspect-square cursor-pointer group" data-animate data-delay="200">
+            <img src="/images/front-walk-after.png" alt="Front walk landscaping project" class="lightbox-trigger w-full h-full object-cover hover:scale-110 transition-transform duration-700 cursor-pointer" loading="lazy" />
           </div>
-          <div class="rounded-xl overflow-hidden shadow-lg aspect-square" data-animate data-delay="300">
-            <img src="/images/facade-after-edited-1.png" alt="House facade landscaping" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700" loading="lazy" />
+          <div class="rounded-xl overflow-hidden shadow-lg aspect-square cursor-pointer group" data-animate data-delay="300">
+            <img src="/images/facade-after-edited-1.png" alt="House facade landscaping" class="lightbox-trigger w-full h-full object-cover hover:scale-110 transition-transform duration-700 cursor-pointer" loading="lazy" />
           </div>
-          <div class="rounded-xl overflow-hidden shadow-lg aspect-square" data-animate data-delay="400">
-            <img src="/images/finished-front-house.jpg" alt="Completed front yard landscaping" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700" loading="lazy" />
+          <div class="rounded-xl overflow-hidden shadow-lg aspect-square cursor-pointer group" data-animate data-delay="400">
+            <img src="/images/finished-front-house.jpg" alt="Completed front yard landscaping" class="lightbox-trigger w-full h-full object-cover hover:scale-110 transition-transform duration-700 cursor-pointer" loading="lazy" />
           </div>
         </div>
       </div>
@@ -223,6 +224,8 @@ const services = [
         </div>
       </div>
     </section>
+
+    <Lightbox />
   </main>
 
   <Footer />

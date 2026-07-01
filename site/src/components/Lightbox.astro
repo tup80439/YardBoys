@@ -86,6 +86,8 @@
     let touchFired = false;
 
     function handleTrigger(e: Event) {
+      // Don't intercept touches/clicks inside a before/after slider
+      if ((e.target as HTMLElement).closest('img-comparison-slider')) return;
       const trigger = (e.target as HTMLElement).closest('.lightbox-trigger') as HTMLImageElement | null;
       if (trigger) {
         e.preventDefault();
@@ -104,6 +106,8 @@
 
     // Touch fallback for iOS — touchend fires reliably on all elements
     document.addEventListener('touchend', (e) => {
+      // Don't intercept touches inside a before/after slider
+      if ((e.target as HTMLElement).closest('img-comparison-slider')) return;
       const trigger = (e.target as HTMLElement).closest('.lightbox-trigger') as HTMLImageElement | null;
       if (trigger) {
         touchFired = true;
