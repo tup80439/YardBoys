@@ -1,0 +1,97 @@
+---
+/**
+ * Lightbox component — renders a <dialog>-based click-to-enlarge overlay.
+ * Usage: include once on the page. Gallery images should have
+ * class="lightbox-trigger" and the full-size src as their own src.
+ */
+---
+
+<dialog id="lightbox-dialog" class="fixed inset-0 z-[20000] w-screen h-screen max-w-none max-h-none m-0 p-0 bg-transparent border-none overflow-hidden">
+  <div id="lightbox-backdrop" class="absolute inset-0 bg-charcoal-900/90 backdrop-blur-sm"></div>
+  <div class="relative z-10 w-full h-full flex items-center justify-center p-4 sm:p-8">
+    <button
+      id="lightbox-close"
+      class="absolute top-4 right-4 sm:top-6 sm:right-6 z-20 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-all duration-300 backdrop-blur-sm border border-white/10"
+      aria-label="Close lightbox"
+    >
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+    <img
+      id="lightbox-image"
+      src=""
+      alt=""
+      class="max-w-full max-h-[90vh] object-contain rounded-xl shadow-2xl transition-transform duration-300"
+    />
+  </div>
+</dialog>
+
+<style>
+  dialog::backdrop {
+    background: transparent;
+  }
+
+  dialog[open] {
+    animation: lightbox-in 0.25s ease-out;
+  }
+
+  @keyframes lightbox-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  dialog #lightbox-image {
+    animation: lightbox-scale-in 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes lightbox-scale-in {
+    from { opacity: 0; transform: scale(0.92); }
+    to { opacity: 1; transform: scale(1); }
+  }
+</style>
+
+<script>
+  function initLightbox() {
+    const dialog = document.getElementById('lightbox-dialog') as HTMLDialogElement | null;
+    const img = document.getElementById('lightbox-image') as HTMLImageElement | null;
+    const closeBtn = document.getElementById('lightbox-close');
+    const backdrop = document.getElementById('lightbox-backdrop');
+
+    if (!dialog || !img || dialog.dataset.lbInit === 'true') return;
+    dialog.dataset.lbInit = 'true';
+
+    function open(src: string, alt: string) {
+      if (!dialog || !img) return;
+      img.src = src;
+      img.alt = alt || '';
+      dialog.showModal();
+    }
+
+    function close() {
+      dialog?.close();
+    }
+
+    closeBtn?.addEventListener('click', close);
+    backdrop?.addEventListener('click', close);
+
+    dialog.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        close();
+      }
+    });
+
+    // Delegate click on any .lightbox-trigger
+    document.addEventListener('click', (e) => {
+      const trigger = (e.target as HTMLElement).closest('.lightbox-trigger') as HTMLImageElement | null;
+      if (trigger) {
+        e.preventDefault();
+        open(trigger.src, trigger.alt);
+      }
+    });
+  }
+
+  initLightbox();
+  document.addEventListener('astro:page-load', initLightbox);
+</script>
