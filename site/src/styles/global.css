@@ -64,6 +64,10 @@ img-comparison-slider {
   overflow: hidden;
 }
 
+img-comparison-slider[direction="vertical"] {
+  touch-action: pan-x pinch-zoom;
+}
+
 img-comparison-slider::part(divider) {
   background: #4A7C2E;
 }
