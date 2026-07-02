@@ -82,13 +82,44 @@
       }
     });
 
-    // Delegate click on any .lightbox-trigger
-    document.addEventListener('click', (e) => {
+    // Flag to prevent double-fire from touchend + click on mobile
+    let touchFired = false;
+
+    function handleTrigger(e: Event) {
+      // Don't intercept touches/clicks inside a before/after slider
+      if ((e.target as HTMLElement).closest('img-comparison-slider')) return;
       const trigger = (e.target as HTMLElement).closest('.lightbox-trigger') as HTMLImageElement | null;
       if (trigger) {
         e.preventDefault();
         open(trigger.src, trigger.alt);
       }
+    }
+
+    // Delegate click on any .lightbox-trigger
+    document.addEventListener('click', (e) => {
+      if (touchFired) {
+        touchFired = false;
+        return;
+      }
+      handleTrigger(e);
+    });
+
+    // Touch fallback for iOS — touchend fires reliably on all elements
+    document.addEventListener('touchend', (e) => {
+      // Don't intercept touches inside a before/after slider
+      if ((e.target as HTMLElement).closest('img-comparison-slider')) return;
+      const trigger = (e.target as HTMLElement).closest('.lightbox-trigger') as HTMLImageElement | null;
+      if (trigger) {
+        touchFired = true;
+        e.preventDefault();
+        open(trigger.src, trigger.alt);
+      }
+    });
+
+    // Also handle close on touch for backdrop
+    backdrop?.addEventListener('touchend', (e) => {
+      e.preventDefault();
+      close();
     });
   }
 
