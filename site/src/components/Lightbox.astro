@@ -82,35 +82,60 @@
       }
     });
 
-    // Flag to prevent double-fire from touchend + click on mobile
-    let touchFired = false;
+    // ── Robust double-fire prevention ──
+    // Use a timestamp instead of a boolean flag. iOS Safari can fire
+    // touchend + click with unpredictable timing; a 400ms window
+    // reliably deduplicates them without race conditions.
+    let lastTouchTriggerTime = 0;
+    const TOUCH_CLICK_DEBOUNCE = 400; // ms
 
-    function handleTrigger(e: Event) {
-      // Don't intercept touches/clicks inside a before/after slider
-      if ((e.target as HTMLElement).closest('img-comparison-slider')) return;
-      const trigger = (e.target as HTMLElement).closest('.lightbox-trigger') as HTMLImageElement | null;
-      if (trigger) {
+    /**
+     * Core trigger logic — shared by both click and touchend.
+     * Returns true if a lightbox was opened.
+     */
+    function tryOpenLightbox(e: Event): boolean {
+      const target = e.target as HTMLElement;
+
+      // ── HARD BLOCK: never trigger from inside a before/after slider ──
+      if (target.closest('img-comparison-slider') ||
+          target.closest('.before-after-wrapper') ||
+          target.closest('.before-after-vertical-wrapper')) {
+        return false;
+      }
+
+      const trigger = target.closest('.lightbox-trigger') as HTMLImageElement | null;
+      if (trigger && trigger.tagName === 'IMG') {
         e.preventDefault();
         open(trigger.src, trigger.alt);
+        return true;
       }
+
+      return false;
     }
 
     // Delegate click on any .lightbox-trigger
     document.addEventListener('click', (e) => {
-      if (touchFired) {
-        touchFired = false;
+      // Skip if this click was already handled by a recent touchend
+      if (Date.now() - lastTouchTriggerTime < TOUCH_CLICK_DEBOUNCE) {
         return;
       }
-      handleTrigger(e);
+      tryOpenLightbox(e);
     });
 
     // Touch fallback for iOS — touchend fires reliably on all elements
     document.addEventListener('touchend', (e) => {
-      // Don't intercept touches inside a before/after slider
-      if ((e.target as HTMLElement).closest('img-comparison-slider')) return;
-      const trigger = (e.target as HTMLElement).closest('.lightbox-trigger') as HTMLImageElement | null;
-      if (trigger) {
-        touchFired = true;
+      const target = e.target as HTMLElement;
+
+      // Hard block: never fire from inside a slider
+      if (target.closest('img-comparison-slider') ||
+          target.closest('.before-after-wrapper') ||
+          target.closest('.before-after-vertical-wrapper')) {
+        return;
+      }
+
+      const trigger = target.closest('.lightbox-trigger') as HTMLImageElement | null;
+      if (trigger && trigger.tagName === 'IMG') {
+        lastTouchTriggerTime = Date.now();
         e.preventDefault();
         open(trigger.src, trigger.alt);
       }

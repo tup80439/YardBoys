@@ -62,6 +62,24 @@ const { beforeSrc, afterSrc, beforeAlt = 'Before', afterAlt = 'After' } = Astro.
       if (!slider || slider.dataset.horizInit === 'true') return;
       slider.dataset.horizInit = 'true';
 
+      // ── Defensive: stop ALL clicks/taps inside the slider from bubbling ──
+      slider.addEventListener('click', (e: Event) => {
+        e.preventDefault();
+        e.stopPropagation();
+      }, true);
+
+      wrapper.addEventListener('click', (e: Event) => {
+        e.preventDefault();
+        e.stopPropagation();
+      });
+
+      // Block touch events from propagating out of the slider
+      for (const evt of ['touchstart', 'touchmove', 'touchend'] as const) {
+        slider.addEventListener(evt, (e: Event) => {
+          e.stopPropagation();
+        });
+      }
+
       function updateLabels() {
         const val = slider.value ?? 50;
         if (beforeLabel) {

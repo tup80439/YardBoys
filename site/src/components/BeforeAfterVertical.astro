@@ -110,6 +110,31 @@ const { beforeSrc, afterSrc, beforeAlt = 'Before', afterAlt = 'After' } = Astro.
       if (!slider || slider.dataset.vertInit === 'true') return;
       slider.dataset.vertInit = 'true';
 
+      // ── Defensive: stop ALL clicks/taps inside the slider from bubbling ──
+      // This prevents any parent <a>, document-level handler (e.g. Lightbox),
+      // or browser-default behavior from intercepting slider interactions.
+      slider.addEventListener('click', (e: Event) => {
+        e.preventDefault();
+        e.stopPropagation();
+      }, true); // capture phase — catches before anything else
+
+      // Also block on the wrapper itself, so edge-taps near the slider
+      // that land on the wrapper div don't bubble to a parent link.
+      wrapper.addEventListener('click', (e: Event) => {
+        // Allow the toggle button to work
+        if ((e.target as HTMLElement).closest('.ba-vertical-toggle')) return;
+        e.preventDefault();
+        e.stopPropagation();
+      });
+
+      // Block touch events from propagating out of the slider
+      // (prevents Lightbox touchend handler from catching these)
+      for (const evt of ['touchstart', 'touchmove', 'touchend'] as const) {
+        slider.addEventListener(evt, (e: Event) => {
+          e.stopPropagation();
+        });
+      }
+
       // --- Label visibility tied to slider position ---
       function updateLabels() {
         const val = slider.value ?? 50;
@@ -131,7 +156,8 @@ const { beforeSrc, afterSrc, beforeAlt = 'Before', afterAlt = 'After' } = Astro.
 
         let showingAfter = false;
 
-        toggle.addEventListener('click', () => {
+        toggle.addEventListener('click', (e: Event) => {
+          e.stopPropagation(); // don't let this bubble to wrapper's click blocker
           showingAfter = !showingAfter;
           slider.value = showingAfter ? 100 : 0;
           // Update labels after programmatic toggle

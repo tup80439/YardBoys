@@ -12,6 +12,7 @@ const serviceOptions = [
   'Gutter Work',
   'Pruning & Trimming',
   'Snow Removal',
+  'Christmas Lights',
 ];
 ---
 
@@ -153,6 +154,21 @@ const serviceOptions = [
                 </div>
 
                 <div>
+                  <label for="phone" class="block text-charcoal-600 text-sm font-semibold mb-2">
+                    Phone Number <span class="text-red-400">*</span>
+                  </label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone-visible"
+                    required
+                    autocomplete="tel"
+                    class="w-full px-4 py-3 bg-cream-50 border border-charcoal-100 rounded-xl text-charcoal-700 placeholder-charcoal-300 focus:outline-none focus:ring-2 focus:ring-forest-500/30 focus:border-forest-500 transition-all duration-300"
+                    placeholder="215-555-1234"
+                  />
+                </div>
+
+                <div>
                   <label for="address" class="block text-charcoal-600 text-sm font-semibold mb-2">
                     Address <span class="text-red-400">*</span>
                   </label>
@@ -254,7 +270,7 @@ const serviceOptions = [
     const firstNameInput = form.querySelector('#first-name') as HTMLInputElement | null;
     const lastNameInput = form.querySelector('#last-name') as HTMLInputElement | null;
     const emailInput = form.querySelector('#email') as HTMLInputElement | null;
-    const phoneInput = form.querySelector('#phone, [name="phone"], input[type="tel"]') as HTMLInputElement | null;
+    const phoneInput = form.querySelector('#phone') as HTMLInputElement | null;
     const fullNameInput = form.querySelector('#full-name') as HTMLInputElement | null;
     const hiddenPhoneInput = form.querySelector('#form-phone') as HTMLInputElement | null;
     const addressInput = form.querySelector('#address') as HTMLInputElement | null;

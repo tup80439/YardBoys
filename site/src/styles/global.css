@@ -63,9 +63,27 @@ img-comparison-slider {
   border-radius: 1rem;
   overflow: hidden;
   touch-action: none;
+  -webkit-touch-callout: none; /* prevent iOS "Open Image" menu */
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 img-comparison-slider img {
+  pointer-events: none;
+  -webkit-touch-callout: none;
+  -webkit-user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Slider wrapper: allow vertical scroll, but nothing else */
+.before-after-wrapper,
+.before-after-vertical-wrapper {
+  touch-action: pan-y;
+}
+
+/* Labels should never intercept touch events meant for the slider */
+.ba-label {
   pointer-events: none;
 }
 
