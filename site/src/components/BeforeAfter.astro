@@ -9,92 +9,151 @@ interface Props {
 const { beforeSrc, afterSrc, beforeAlt = 'Before', afterAlt = 'After' } = Astro.props;
 ---
 
-<div class="before-after-wrapper relative" data-animate>
+<div class="ba-slider ba-slider--horiz" data-animate>
   <div class="flex items-center gap-2 mb-4">
     <div class="h-px flex-1 bg-gradient-to-r from-transparent to-forest-500/30"></div>
     <span class="text-xs font-semibold uppercase tracking-[0.2em] text-forest-600">Drag to Compare</span>
     <div class="h-px flex-1 bg-gradient-to-l from-transparent to-forest-500/30"></div>
   </div>
 
-  <div class="relative rounded-2xl overflow-hidden shadow-2xl">
+  <div class="ba-slider__container">
+    <!-- After image (bottom layer) -->
+    <img src={afterSrc} alt={afterAlt} class="ba-slider__img" draggable="false" />
+
+    <!-- Before image (top layer, clipped) -->
+    <img
+      src={beforeSrc}
+      alt={beforeAlt}
+      class="ba-slider__img ba-slider__before ba-slider__before--horiz"
+      draggable="false"
+      style="clip-path: inset(0 50% 0 0)"
+    />
+
     <!-- Labels -->
-    <span data-label="before" class="ba-label absolute top-4 left-4 z-10 px-3 py-1 text-xs font-bold uppercase tracking-wider bg-black/60 backdrop-blur-sm text-white rounded-full flex items-center gap-1.5 border border-white/10 select-none">
-      <span class="w-1.5 h-1.5 rounded-full bg-red-400"></span>
+    <span class="ba-slider__label ba-slider__label--before">
+      <span class="ba-slider__label-dot ba-slider__label-dot--red"></span>
       Before
     </span>
-    <span data-label="after" class="ba-label absolute bottom-4 right-4 z-10 px-3 py-1 text-xs font-bold uppercase tracking-wider bg-forest-600/90 backdrop-blur-sm text-white rounded-full flex items-center gap-1.5 border border-white/10 select-none">
+    <span class="ba-slider__label ba-slider__label--after">
       After
-      <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+      <span class="ba-slider__label-dot ba-slider__label-dot--white"></span>
     </span>
 
-    <img-comparison-slider class="w-full">
-      <img slot="first" src={beforeSrc} alt={beforeAlt} class="w-full h-full object-cover" />
-      <img slot="second" src={afterSrc} alt={afterAlt} class="w-full h-full object-cover" />
-      <div slot="handle" class="w-11 h-11 flex items-center justify-center cursor-grab active:cursor-grabbing">
-        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 7l-5 5 5 5M15 7l5 5-5 5" />
-        </svg>
-      </div>
-    </img-comparison-slider>
+    <!-- Divider line (vertical) -->
+    <div class="ba-slider__divider ba-slider__divider--horiz" style="left: 50%"></div>
+
+    <!-- Drag handle -->
+    <div class="ba-slider__handle ba-slider__handle--horiz" style="left: 50%">
+      <svg class="ba-slider__handle-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 7l-5 5 5 5M15 7l5 5-5 5" />
+      </svg>
+    </div>
   </div>
 </div>
 
 <style>
-  .ba-label {
-    transition: opacity 0.25s ease;
+  /* Horizontal-specific overrides (base styles come from BeforeAfterVertical) */
+
+  .ba-slider__divider--horiz {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    height: auto;
+    left: 50%;
+    background: #4A7C2E;
+    z-index: 3;
+    transform: translateX(-50%);
+    pointer-events: none;
   }
 
-  .ba-label.ba-label-hidden {
-    opacity: 0;
-    pointer-events: none;
+  .ba-slider__handle--horiz {
+    position: absolute;
+    top: 50%;
+    z-index: 4;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #4A7C2E;
+    border: 3px solid #fff;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translate(-50%, -50%);
+    cursor: grab;
+    touch-action: none;
+  }
+
+  .ba-slider__handle--horiz:active {
+    cursor: grabbing;
   }
 </style>
 
 <script>
-  import 'img-comparison-slider';
+  function initHorizSliders() {
+    document.querySelectorAll('.ba-slider--horiz').forEach((root) => {
+      if ((root as HTMLElement).dataset.sliderInit === '1') return;
+      (root as HTMLElement).dataset.sliderInit = '1';
 
-  function initHorizontalSliders() {
-    document.querySelectorAll('.before-after-wrapper').forEach((wrapper) => {
-      const slider = wrapper.querySelector('img-comparison-slider') as any;
-      const beforeLabel = wrapper.querySelector('[data-label="before"]') as HTMLElement | null;
-      const afterLabel = wrapper.querySelector('[data-label="after"]') as HTMLElement | null;
+      const container = root.querySelector('.ba-slider__container') as HTMLElement;
+      const beforeImg = root.querySelector('.ba-slider__before--horiz') as HTMLImageElement;
+      const handle = root.querySelector('.ba-slider__handle--horiz') as HTMLElement;
+      const divider = root.querySelector('.ba-slider__divider--horiz') as HTMLElement;
+      const beforeLabel = root.querySelector('.ba-slider__label--before') as HTMLElement | null;
+      const afterLabel = root.querySelector('.ba-slider__label--after') as HTMLElement | null;
 
-      if (!slider || slider.dataset.horizInit === 'true') return;
-      slider.dataset.horizInit = 'true';
+      if (!container || !beforeImg || !handle || !divider) return;
 
-      // ── Defensive: stop ALL clicks/taps inside the slider from bubbling ──
-      slider.addEventListener('click', (e: Event) => {
+      let pct = 50; // 0 = all after (before hidden), 100 = all before
+
+      function render() {
+        // clip-path: inset(0 RIGHT% 0 0) — RIGHT% is how much to hide from the right
+        const hideRight = 100 - pct;
+        beforeImg.style.clipPath = `inset(0 ${hideRight}% 0 0)`;
+        handle.style.left = `${pct}%`;
+        divider.style.left = `${pct}%`;
+
+        if (beforeLabel) beforeLabel.classList.toggle('hidden', pct <= 5);
+        if (afterLabel) afterLabel.classList.toggle('hidden', pct >= 95);
+      }
+
+      let dragging = false;
+
+      handle.addEventListener('pointerdown', (e: PointerEvent) => {
         e.preventDefault();
-        e.stopPropagation();
-      }, true);
+        dragging = true;
+        handle.setPointerCapture(e.pointerId);
+      });
 
-      wrapper.addEventListener('click', (e: Event) => {
+      handle.addEventListener('pointermove', (e: PointerEvent) => {
+        if (!dragging) return;
+        const rect = container.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        pct = Math.max(0, Math.min(100, (x / rect.width) * 100));
+        render();
+      });
+
+      handle.addEventListener('pointerup', () => { dragging = false; });
+      handle.addEventListener('pointercancel', () => { dragging = false; });
+
+      container.addEventListener('pointerdown', (e: PointerEvent) => {
+        if (e.target === handle || handle.contains(e.target as Node)) return;
+        const rect = container.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        pct = Math.max(0, Math.min(100, (x / rect.width) * 100));
+        render();
+      });
+
+      container.addEventListener('click', (e: Event) => {
         e.preventDefault();
         e.stopPropagation();
       });
 
-      // Block touch events from propagating out of the slider
-      for (const evt of ['touchstart', 'touchmove', 'touchend'] as const) {
-        slider.addEventListener(evt, (e: Event) => {
-          e.stopPropagation();
-        });
-      }
-
-      function updateLabels() {
-        const val = slider.value ?? 50;
-        if (beforeLabel) {
-          beforeLabel.classList.toggle('ba-label-hidden', val <= 5);
-        }
-        if (afterLabel) {
-          afterLabel.classList.toggle('ba-label-hidden', val >= 95);
-        }
-      }
-
-      slider.addEventListener('slide', updateLabels);
-      updateLabels();
+      render();
     });
   }
 
-  initHorizontalSliders();
-  document.addEventListener('astro:page-load', initHorizontalSliders);
+  initHorizSliders();
+  document.addEventListener('astro:page-load', initHorizSliders);
 </script>

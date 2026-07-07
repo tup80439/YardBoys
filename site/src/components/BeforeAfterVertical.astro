@@ -9,38 +9,49 @@ interface Props {
 const { beforeSrc, afterSrc, beforeAlt = 'Before', afterAlt = 'After' } = Astro.props;
 ---
 
-<div class="before-after-vertical-wrapper relative" data-animate>
+<div class="ba-slider" data-animate>
   <div class="flex items-center gap-2 mb-4">
     <div class="h-px flex-1 bg-gradient-to-r from-transparent to-forest-500/30"></div>
     <span class="text-xs font-semibold uppercase tracking-[0.2em] text-forest-600">Slide to Compare</span>
     <div class="h-px flex-1 bg-gradient-to-l from-transparent to-forest-500/30"></div>
   </div>
 
-  <div class="relative rounded-2xl overflow-hidden shadow-2xl">
+  <div class="ba-slider__container">
+    <!-- After image (bottom layer, always fully visible) -->
+    <img src={afterSrc} alt={afterAlt} class="ba-slider__img" draggable="false" />
+
+    <!-- Before image (top layer, clipped by percentage) -->
+    <img
+      src={beforeSrc}
+      alt={beforeAlt}
+      class="ba-slider__img ba-slider__before"
+      draggable="false"
+      style="clip-path: inset(0 0 50% 0)"
+    />
+
     <!-- Labels -->
-    <span data-label="before" class="ba-label absolute top-4 left-4 z-10 px-3 py-1 text-xs font-bold uppercase tracking-wider bg-black/60 backdrop-blur-sm text-white rounded-full flex items-center gap-1.5 border border-white/10 select-none">
-      <span class="w-1.5 h-1.5 rounded-full bg-red-400"></span>
+    <span class="ba-slider__label ba-slider__label--before">
+      <span class="ba-slider__label-dot ba-slider__label-dot--red"></span>
       Before
     </span>
-    <span data-label="after" class="ba-label absolute bottom-4 right-4 z-10 px-3 py-1 text-xs font-bold uppercase tracking-wider bg-forest-600/90 backdrop-blur-sm text-white rounded-full flex items-center gap-1.5 border border-white/10 select-none">
+    <span class="ba-slider__label ba-slider__label--after">
       After
-      <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
+      <span class="ba-slider__label-dot ba-slider__label-dot--white"></span>
     </span>
 
-    <img-comparison-slider class="w-full" direction="vertical">
-      <img slot="first" src={beforeSrc} alt={beforeAlt} class="w-full h-full object-cover" />
-      <img slot="second" src={afterSrc} alt={afterAlt} class="w-full h-full object-cover" />
-      <!-- Counter-rotate -90deg to undo library's shadow DOM rotate(90deg) on vertical handles -->
-      <div slot="handle" class="w-11 h-11 flex items-center justify-center cursor-grab active:cursor-grabbing" style="transform: rotate(-90deg)">
-        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 9l5-5 5 5M7 15l5 5 5-5" />
-        </svg>
-      </div>
-    </img-comparison-slider>
+    <!-- Divider line -->
+    <div class="ba-slider__divider" style="top: 50%"></div>
+
+    <!-- Drag handle -->
+    <div class="ba-slider__handle" style="top: 50%">
+      <svg class="ba-slider__handle-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 9l5-5 5 5M7 15l5 5 5-5" />
+      </svg>
+    </div>
   </div>
 
-  <!-- Tap-to-toggle fallback (touch devices only) -->
-  <button class="ba-vertical-toggle" type="button" aria-label="Toggle before and after">
+  <!-- Tap-to-toggle fallback (touch devices) -->
+  <button class="ba-slider__toggle" type="button" aria-label="Toggle before and after">
     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
     </svg>
@@ -49,21 +60,132 @@ const { beforeSrc, afterSrc, beforeAlt = 'Before', afterAlt = 'After' } = Astro.
 </div>
 
 <style>
-  .ba-label {
+  /* ── Container ── */
+  .ba-slider__container {
+    position: relative;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    line-height: 0; /* kill whitespace gap under images */
+  }
+
+  /* ── Images ── */
+  .ba-slider__img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    pointer-events: none;
+    -webkit-user-drag: none;
+    -webkit-touch-callout: none;
+  }
+
+  .ba-slider__before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+  }
+
+  /* ── Labels ── */
+  .ba-slider__label {
+    position: absolute;
+    z-index: 5;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: white;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    pointer-events: none;
     transition: opacity 0.25s ease;
   }
 
-  .ba-label.ba-label-hidden {
+  .ba-slider__label--before {
+    top: 1rem;
+    left: 1rem;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  .ba-slider__label--after {
+    bottom: 1rem;
+    right: 1rem;
+    background: rgba(74, 124, 46, 0.9);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  .ba-slider__label.hidden {
     opacity: 0;
+  }
+
+  .ba-slider__label-dot {
+    width: 0.375rem;
+    height: 0.375rem;
+    border-radius: 50%;
+  }
+
+  .ba-slider__label-dot--red { background: #f87171; }
+  .ba-slider__label-dot--white { background: white; }
+
+  /* ── Divider line ── */
+  .ba-slider__divider {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: #4A7C2E;
+    z-index: 3;
+    transform: translateY(-50%);
     pointer-events: none;
   }
 
-  .ba-vertical-toggle {
+  /* ── Drag handle ── */
+  .ba-slider__handle {
+    position: absolute;
+    left: 50%;
+    z-index: 4;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #4A7C2E;
+    border: 3px solid #fff;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translate(-50%, -50%);
+    cursor: grab;
+    touch-action: none; /* critical: prevents browser scroll fighting the drag */
+  }
+
+  .ba-slider__handle:active {
+    cursor: grabbing;
+  }
+
+  .ba-slider__handle-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    color: white;
+  }
+
+  /* ── Tap-to-toggle button ── */
+  .ba-slider__toggle {
     display: none;
   }
 
   @media (hover: none) and (pointer: coarse) {
-    .ba-vertical-toggle {
+    .ba-slider__toggle {
       display: inline-flex;
       align-items: center;
       gap: 0.375rem;
@@ -84,12 +206,11 @@ const { beforeSrc, afterSrc, beforeAlt = 'Before', afterAlt = 'After' } = Astro.
       width: fit-content;
     }
 
-    .ba-vertical-toggle:active {
+    .ba-slider__toggle:active {
       background: rgba(74, 124, 46, 0.18);
     }
 
-    /* Center the button under the slider */
-    .before-after-vertical-wrapper {
+    .ba-slider {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -98,75 +219,89 @@ const { beforeSrc, afterSrc, beforeAlt = 'Before', afterAlt = 'After' } = Astro.
 </style>
 
 <script>
-  import 'img-comparison-slider';
+  function initSliders() {
+    document.querySelectorAll('.ba-slider').forEach((root) => {
+      if ((root as HTMLElement).dataset.sliderInit === '1') return;
+      (root as HTMLElement).dataset.sliderInit = '1';
 
-  function initVerticalSliders() {
-    document.querySelectorAll('.before-after-vertical-wrapper').forEach((wrapper) => {
-      const slider = wrapper.querySelector('img-comparison-slider') as any;
-      const toggle = wrapper.querySelector('.ba-vertical-toggle') as HTMLButtonElement | null;
-      const beforeLabel = wrapper.querySelector('[data-label="before"]') as HTMLElement | null;
-      const afterLabel = wrapper.querySelector('[data-label="after"]') as HTMLElement | null;
+      const container = root.querySelector('.ba-slider__container') as HTMLElement;
+      const beforeImg = root.querySelector('.ba-slider__before') as HTMLImageElement;
+      const handle = root.querySelector('.ba-slider__handle') as HTMLElement;
+      const divider = root.querySelector('.ba-slider__divider') as HTMLElement;
+      const beforeLabel = root.querySelector('.ba-slider__label--before') as HTMLElement | null;
+      const afterLabel = root.querySelector('.ba-slider__label--after') as HTMLElement | null;
+      const toggle = root.querySelector('.ba-slider__toggle') as HTMLButtonElement | null;
 
-      if (!slider || slider.dataset.vertInit === 'true') return;
-      slider.dataset.vertInit = 'true';
+      if (!container || !beforeImg || !handle || !divider) return;
 
-      // ── Defensive: stop ALL clicks/taps inside the slider from bubbling ──
-      // This prevents any parent <a>, document-level handler (e.g. Lightbox),
-      // or browser-default behavior from intercepting slider interactions.
-      slider.addEventListener('click', (e: Event) => {
+      let pct = 50; // 0 = all after, 100 = all before
+
+      /** Apply the current pct to the DOM */
+      function render() {
+        // clip-path: inset(0 0 BOTTOM% 0) — BOTTOM% is how much to hide from the bottom
+        // When pct=50, we want 50% visible from top → hide 50% from bottom
+        const hideBottom = 100 - pct;
+        beforeImg.style.clipPath = `inset(0 0 ${hideBottom}% 0)`;
+        handle.style.top = `${pct}%`;
+        divider.style.top = `${pct}%`;
+
+        // Hide labels at extremes
+        if (beforeLabel) beforeLabel.classList.toggle('hidden', pct <= 5);
+        if (afterLabel) afterLabel.classList.toggle('hidden', pct >= 95);
+      }
+
+      // ── Pointer Events API — unified mouse + touch ──
+      let dragging = false;
+
+      handle.addEventListener('pointerdown', (e: PointerEvent) => {
         e.preventDefault();
-        e.stopPropagation();
-      }, true); // capture phase — catches before anything else
+        dragging = true;
+        handle.setPointerCapture(e.pointerId);
+      });
 
-      // Also block on the wrapper itself, so edge-taps near the slider
-      // that land on the wrapper div don't bubble to a parent link.
-      wrapper.addEventListener('click', (e: Event) => {
-        // Allow the toggle button to work
-        if ((e.target as HTMLElement).closest('.ba-vertical-toggle')) return;
+      handle.addEventListener('pointermove', (e: PointerEvent) => {
+        if (!dragging) return;
+        const rect = container.getBoundingClientRect(); // fresh every move — no stale rects
+        const y = e.clientY - rect.top;
+        pct = Math.max(0, Math.min(100, (y / rect.height) * 100));
+        render();
+      });
+
+      handle.addEventListener('pointerup', () => { dragging = false; });
+      handle.addEventListener('pointercancel', () => { dragging = false; });
+
+      // Also allow clicking/tapping anywhere in the container to jump the slider
+      container.addEventListener('pointerdown', (e: PointerEvent) => {
+        // Don't interfere if they grabbed the handle directly
+        if (e.target === handle || handle.contains(e.target as Node)) return;
+        const rect = container.getBoundingClientRect();
+        const y = e.clientY - rect.top;
+        pct = Math.max(0, Math.min(100, (y / rect.height) * 100));
+        render();
+      });
+
+      // ── Block ALL navigation-like events from escaping ──
+      container.addEventListener('click', (e: Event) => {
         e.preventDefault();
         e.stopPropagation();
       });
 
-      // Block touch events from propagating out of the slider
-      // (prevents Lightbox touchend handler from catching these)
-      for (const evt of ['touchstart', 'touchmove', 'touchend'] as const) {
-        slider.addEventListener(evt, (e: Event) => {
-          e.stopPropagation();
-        });
-      }
-
-      // --- Label visibility tied to slider position ---
-      function updateLabels() {
-        const val = slider.value ?? 50;
-        if (beforeLabel) {
-          beforeLabel.classList.toggle('ba-label-hidden', val <= 5);
-        }
-        if (afterLabel) {
-          afterLabel.classList.toggle('ba-label-hidden', val >= 95);
-        }
-      }
-
-      slider.addEventListener('slide', updateLabels);
-      // Run once on init in case value starts at an extreme
-      updateLabels();
-
-      // --- Tap-to-toggle fallback ---
-      if (toggle && toggle.dataset.init !== 'true') {
-        toggle.dataset.init = 'true';
-
+      // ── Tap-to-toggle ──
+      if (toggle) {
         let showingAfter = false;
-
         toggle.addEventListener('click', (e: Event) => {
-          e.stopPropagation(); // don't let this bubble to wrapper's click blocker
+          e.stopPropagation();
           showingAfter = !showingAfter;
-          slider.value = showingAfter ? 100 : 0;
-          // Update labels after programmatic toggle
-          updateLabels();
+          pct = showingAfter ? 0 : 100;
+          render();
         });
       }
+
+      // Initial render
+      render();
     });
   }
 
-  initVerticalSliders();
-  document.addEventListener('astro:page-load', initVerticalSliders);
+  initSliders();
+  document.addEventListener('astro:page-load', initSliders);
 </script>
