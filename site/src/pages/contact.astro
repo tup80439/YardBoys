@@ -12,10 +12,13 @@ const serviceOptions = [
   'Gutter Work',
   'Pruning & Trimming',
   'Snow Removal',
+  'Christmas Lights',
+  'Land Clearing & Overgrowth Removal',
+  'Other',
 ];
 ---
 
-<Layout title="Contact — Yard Boys Landscaping" description="Contact Yard Boys for a free landscaping estimate. Call (215) 327-6144 or email office@yardboysllc.com. Serving PA.">
+<Layout title="Contact — Yard Boys Landscaping" description="Contact Yard Boys for a free landscaping estimate. Call 215-254-9563 or email office@yardboysllc.com. Serving PA.">
   <Navbar />
 
   <main>
@@ -57,8 +60,8 @@ const serviceOptions = [
                   <p class="text-white/70 text-xs uppercase tracking-wider font-medium">Call Us</p>
                 </div>
               </div>
-              <a href="tel:2153276144" class="text-3xl sm:text-4xl font-black hover:text-forest-200 transition-colors duration-300" id="contact-phone-number">
-                (215) 327-6144
+              <a href="tel:2152549563" class="text-3xl sm:text-4xl font-black hover:text-forest-200 transition-colors duration-300" id="contact-phone-number">
+                215-254-9563
               </a>
               <p class="text-white/70 text-sm mt-2">Available for estimates & consultations</p>
             </div>
@@ -153,6 +156,21 @@ const serviceOptions = [
                 </div>
 
                 <div>
+                  <label for="phone" class="block text-charcoal-600 text-sm font-semibold mb-2">
+                    Phone Number <span class="text-red-400">*</span>
+                  </label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone-visible"
+                    required
+                    autocomplete="tel"
+                    class="w-full px-4 py-3 bg-cream-50 border border-charcoal-100 rounded-xl text-charcoal-700 placeholder-charcoal-300 focus:outline-none focus:ring-2 focus:ring-forest-500/30 focus:border-forest-500 transition-all duration-300"
+                    placeholder="215-555-1234"
+                  />
+                </div>
+
+                <div>
                   <label for="address" class="block text-charcoal-600 text-sm font-semibold mb-2">
                     Address <span class="text-red-400">*</span>
                   </label>
@@ -186,6 +204,20 @@ const serviceOptions = [
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                     </svg>
                   </div>
+                </div>
+
+                <!-- "Other" free-text field, shown only when "Other" is selected -->
+                <div id="other-service-wrapper" class="hidden">
+                  <label for="other-service" class="block text-charcoal-600 text-sm font-semibold mb-2">
+                    Please specify <span class="text-red-400">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    id="other-service"
+                    name="other-service"
+                    class="w-full px-4 py-3 bg-cream-50 border border-charcoal-100 rounded-xl text-charcoal-700 placeholder-charcoal-300 focus:outline-none focus:ring-2 focus:ring-forest-500/30 focus:border-forest-500 transition-all duration-300"
+                    placeholder="Describe what you need..."
+                  />
                 </div>
 
                 <div>
@@ -254,11 +286,24 @@ const serviceOptions = [
     const firstNameInput = form.querySelector('#first-name') as HTMLInputElement | null;
     const lastNameInput = form.querySelector('#last-name') as HTMLInputElement | null;
     const emailInput = form.querySelector('#email') as HTMLInputElement | null;
-    const phoneInput = form.querySelector('#phone, [name="phone"], input[type="tel"]') as HTMLInputElement | null;
+    const phoneInput = form.querySelector('#phone') as HTMLInputElement | null;
     const fullNameInput = form.querySelector('#full-name') as HTMLInputElement | null;
     const hiddenPhoneInput = form.querySelector('#form-phone') as HTMLInputElement | null;
     const addressInput = form.querySelector('#address') as HTMLInputElement | null;
     const messageInput = form.querySelector('#message') as HTMLTextAreaElement | null;
+    const serviceSelect = form.querySelector('#service') as HTMLSelectElement | null;
+    const otherServiceWrapper = document.getElementById('other-service-wrapper');
+    const otherServiceInput = form.querySelector('#other-service') as HTMLInputElement | null;
+
+    // ── "Other" service toggle ──
+    if (serviceSelect && otherServiceWrapper && otherServiceInput) {
+      serviceSelect.addEventListener('change', () => {
+        const isOther = serviceSelect.value === 'Other';
+        otherServiceWrapper.classList.toggle('hidden', !isOther);
+        otherServiceInput.required = isOther;
+        if (!isOther) otherServiceInput.value = '';
+      });
+    }
 
     // Keep Formspree payload keys canonical (especially email/name/phone).
     const syncFormspreePayload = () => {
@@ -276,6 +321,9 @@ const serviceOptions = [
       if (hiddenPhoneInput) {
         hiddenPhoneInput.value = phoneInput?.value.trim() || '';
       }
+
+      // Note: when "Other" is selected, the other-service input (name="other-service")
+      // is submitted alongside service="Other" — both appear in the Formspree email.
 
       if (addressInput) addressInput.value = addressInput.value.trim();
       if (messageInput) messageInput.value = messageInput.value.trim();
