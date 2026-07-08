@@ -97,9 +97,7 @@
       const target = e.target as HTMLElement;
 
       // ── HARD BLOCK: never trigger from inside a before/after slider ──
-      if (target.closest('img-comparison-slider') ||
-          target.closest('.before-after-wrapper') ||
-          target.closest('.before-after-vertical-wrapper')) {
+      if (target.closest('.ba-slider')) {
         return false;
       }
 
@@ -127,9 +125,7 @@
       const target = e.target as HTMLElement;
 
       // Hard block: never fire from inside a slider
-      if (target.closest('img-comparison-slider') ||
-          target.closest('.before-after-wrapper') ||
-          target.closest('.before-after-vertical-wrapper')) {
+      if (target.closest('.ba-slider')) {
         return;
       }
 
