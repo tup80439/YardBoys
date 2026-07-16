@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import BeforeAfter from '../components/BeforeAfter.astro';
 import BeforeAfterVertical from '../components/BeforeAfterVertical.astro';
+import BeforeAfterSideBySide from '../components/BeforeAfterSideBySide.astro';
 
 const services = [
   {
@@ -11,7 +12,7 @@ const services = [
     title: 'Landscape Design & Hardscaping',
     subtitle: 'Design Through to Build',
     description: 'From concept to completion — we design and build patios, walkways, retaining walls, and outdoor living spaces that transform how you use your property. Whether it\'s a full patio build, a new stone walkway, or a custom retaining wall, our team handles every phase with precision and quality craftsmanship. This is what we do best.',
-    image: '/images/landscape-costruction.png',
+    image: '/images/hardscape-patio.jpg',
     icon: '🏗️',
   },
   {
@@ -19,7 +20,7 @@ const services = [
     title: 'Drainage Work',
     subtitle: 'Water Management Solutions',
     description: 'Standing water, erosion, and runoff don\'t fix themselves — and band-aid solutions only make things worse. We diagnose the root cause and install proper drainage systems that redirect water where it belongs, protecting your foundation, beds, and hardscaping for the long term.',
-    image: '/images/front-walk-after.png',
+    image: '/images/drain-work.jpg',
     icon: '💧',
   },
   {
@@ -51,7 +52,7 @@ const services = [
     title: 'Gutter Work',
     subtitle: 'Cleaning & Repair',
     description: 'Gutter cleaning and repair so water goes where it\'s supposed to — instead of into your foundation or beds. Clogged or damaged gutters cause problems that compound fast. We clean, repair, and make sure everything\'s draining properly before we leave.',
-    image: '/images/facade-after-edited-1.png',
+    image: '/images/gutter-work.jpg',
     icon: '🏠',
   },
   {
@@ -83,8 +84,11 @@ const services = [
     title: 'Land Clearing & Overgrowth Removal',
     subtitle: 'Brush Clearing & Property Reclamation',
     description: 'Clearing brush and reclaiming yards that have gotten overgrown, so the property\'s usable again. We handle everything from small backyard cleanouts to larger lots that have been let go — cutting, hauling, and grading until it\'s back to a workable state.',
-    image: '/images/front-corner-after-edited.png',
+    image: '/images/land-clearing-after.jpg',
     icon: '🌳',
+    beforeAfter: true,
+    beforeImage: '/images/land-clearing-before.jpg',
+    afterImage: '/images/land-clearing-after.jpg',
   },
 ];
 ---
@@ -97,7 +101,7 @@ const services = [
     <section class="relative h-[60vh] min-h-[400px] flex items-center justify-center overflow-hidden">
       <div
         class="absolute inset-0 parallax-bg"
-        style="background-image: url('/images/landscape-costruction.png');"
+        style="background-image: url('/images/hardscape-patio.jpg');"
       ></div>
       <div class="hero-overlay absolute inset-0"></div>
 
@@ -122,18 +126,33 @@ const services = [
           <div class={`grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center ${index % 2 !== 0 ? 'lg:[direction:rtl]' : ''}`}>
             <!-- Image -->
             <div class={`relative ${index % 2 !== 0 ? 'lg:[direction:ltr]' : ''}`} data-animate={index % 2 === 0 ? 'left' : 'right'}>
-              <div class="rounded-2xl overflow-hidden shadow-2xl group">
-                <img
-                  src={service.image}
-                  alt={service.title}
-                  class="w-full h-[350px] sm:h-[450px] object-cover transition-transform duration-700 group-hover:scale-105"
-                  loading="lazy"
-                />
-              </div>
-              <!-- Service badge -->
-              <div class="absolute -top-4 -left-4 w-16 h-16 bg-forest-600 rounded-2xl flex items-center justify-center text-2xl shadow-xl">
-                {service.icon}
-              </div>
+              {service.beforeAfter ? (
+                <div class="relative">
+                  <BeforeAfterSideBySide
+                    beforeSrc={service.beforeImage}
+                    afterSrc={service.afterImage}
+                    beforeAlt={`${service.title} — before Yard Boys cleanup`}
+                    afterAlt={`${service.title} — after Yard Boys cleanup`}
+                  />
+                  <div class="absolute -top-4 -left-4 w-16 h-16 bg-forest-600 rounded-2xl flex items-center justify-center text-2xl shadow-xl z-10">
+                    {service.icon}
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <div class="rounded-2xl overflow-hidden shadow-2xl group">
+                    <img
+                      src={service.image}
+                      alt={service.title}
+                      class="w-full h-[350px] sm:h-[450px] object-cover transition-transform duration-700 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div class="absolute -top-4 -left-4 w-16 h-16 bg-forest-600 rounded-2xl flex items-center justify-center text-2xl shadow-xl">
+                    {service.icon}
+                  </div>
+                </>
+              )}
             </div>
 
             <!-- Content -->
