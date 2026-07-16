@@ -12,7 +12,7 @@ const services = [
     title: 'Landscape Design & Hardscaping',
     subtitle: 'Design Through to Build',
     description: 'From concept to completion — we design and build patios, walkways, retaining walls, and outdoor living spaces that transform how you use your property. Whether it\'s a full patio build, a new stone walkway, or a custom retaining wall, our team handles every phase with precision and quality craftsmanship. This is what we do best.',
-    image: '/images/landscape-costruction.png',
+    image: '/images/hardscape-patio.jpg',
     icon: '🏗️',
   },
   {
@@ -20,7 +20,7 @@ const services = [
     title: 'Drainage Work',
     subtitle: 'Water Management Solutions',
     description: 'Standing water, erosion, and runoff don\'t fix themselves — and band-aid solutions only make things worse. We diagnose the root cause and install proper drainage systems that redirect water where it belongs, protecting your foundation, beds, and hardscaping for the long term.',
-    image: '/images/front-walk-after.png',
+    image: '/images/drain-work.jpg',
     icon: '💧',
   },
   {
@@ -52,7 +52,7 @@ const services = [
     title: 'Gutter Work',
     subtitle: 'Cleaning & Repair',
     description: 'Gutter cleaning and repair so water goes where it\'s supposed to — instead of into your foundation or beds. Clogged or damaged gutters cause problems that compound fast. We clean, repair, and make sure everything\'s draining properly before we leave.',
-    image: '/images/facade-after-edited-1.png',
+    image: '/images/gutter-work.jpg',
     icon: '🏠',
   },
   {
@@ -84,8 +84,11 @@ const services = [
     title: 'Land Clearing & Overgrowth Removal',
     subtitle: 'Brush Clearing & Property Reclamation',
     description: 'Clearing brush and reclaiming yards that have gotten overgrown, so the property\'s usable again. We handle everything from small backyard cleanouts to larger lots that have been let go — cutting, hauling, and grading until it\'s back to a workable state.',
-    image: '/images/front-corner-after-edited.png',
+    image: '/images/land-clearing-after.jpg',
     icon: '🌳',
+    beforeAfter: true,
+    beforeImage: '/images/land-clearing-before.jpg',
+    afterImage: '/images/land-clearing-after.jpg',
   },
 ];
 ---
@@ -98,7 +101,7 @@ const services = [
     <section class="relative h-[60vh] min-h-[400px] flex items-center justify-center overflow-hidden">
       <div
         class="absolute inset-0 parallax-bg"
-        style="background-image: url('/images/landscape-costruction.png');"
+        style="background-image: url('/images/hardscape-patio.jpg');"
       ></div>
       <div class="hero-overlay absolute inset-0"></div>
 
@@ -120,45 +123,80 @@ const services = [
         class={`py-20 lg:py-28 ${index % 2 === 0 ? 'bg-white' : 'bg-cream-50'}`}
       >
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div class={`grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center ${index % 2 !== 0 ? 'lg:[direction:rtl]' : ''}`}>
-            <!-- Image -->
-            <div class={`relative ${index % 2 !== 0 ? 'lg:[direction:ltr]' : ''}`} data-animate={index % 2 === 0 ? 'left' : 'right'}>
-              <div class="rounded-2xl overflow-hidden shadow-2xl group">
-                <img
-                  src={service.image}
-                  alt={service.title}
-                  class="w-full h-[350px] sm:h-[450px] object-cover transition-transform duration-700 group-hover:scale-105"
-                  loading="lazy"
+          {service.beforeAfter ? (
+            /* ── Full-width layout for before/after services ── */
+            <div>
+              <div class="text-center max-w-3xl mx-auto mb-12" data-animate>
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-forest-600 rounded-2xl text-2xl shadow-xl mb-6">
+                  {service.icon}
+                </div>
+                <span class="block text-forest-600 text-sm font-semibold uppercase tracking-[0.2em] mb-3">
+                  {service.subtitle}
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-bold text-charcoal-700 mb-6">{service.title}</h2>
+                <p class="text-charcoal-500 leading-relaxed text-lg mb-8">
+                  {service.description}
+                </p>
+                <a
+                  href="/contact"
+                  class="inline-flex items-center gap-2 px-8 py-4 bg-forest-600 hover:bg-forest-500 text-white font-semibold rounded-full transition-all duration-300 shadow-lg hover:shadow-forest-500/25 hover:-translate-y-1"
+                  id={`service-cta-${service.id}`}
+                >
+                  Get a Free Estimate
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </a>
+              </div>
+
+              <div class="max-w-5xl mx-auto" data-animate>
+                <BeforeAfterSideBySide
+                  beforeSrc={service.beforeImage}
+                  afterSrc={service.afterImage}
+                  beforeAlt={`${service.title} — before Yard Boys cleanup`}
+                  afterAlt={`${service.title} — after Yard Boys cleanup`}
                 />
               </div>
-              <!-- Service badge -->
-              <div class="absolute -top-4 -left-4 w-16 h-16 bg-forest-600 rounded-2xl flex items-center justify-center text-2xl shadow-xl">
-                {service.icon}
+            </div>
+          ) : (
+            /* ── Standard 2-column layout ── */
+            <div class={`grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center ${index % 2 !== 0 ? 'lg:[direction:rtl]' : ''}`}>
+              <div class={`relative ${index % 2 !== 0 ? 'lg:[direction:ltr]' : ''}`} data-animate={index % 2 === 0 ? 'left' : 'right'}>
+                <div class="rounded-2xl overflow-hidden shadow-2xl group">
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    class="w-full h-[350px] sm:h-[450px] object-cover transition-transform duration-700 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="absolute -top-4 -left-4 w-16 h-16 bg-forest-600 rounded-2xl flex items-center justify-center text-2xl shadow-xl">
+                  {service.icon}
+                </div>
+              </div>
+
+              <div class={index % 2 !== 0 ? 'lg:[direction:ltr]' : ''} data-animate={index % 2 === 0 ? 'right' : 'left'}>
+                <span class="inline-block text-forest-600 text-sm font-semibold uppercase tracking-[0.2em] mb-3">
+                  {service.subtitle}
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-bold text-charcoal-700 mb-6">{service.title}</h2>
+                <p class="text-charcoal-500 leading-relaxed text-lg mb-6">
+                  {service.description}
+                </p>
+
+                <a
+                  href="/contact"
+                  class="inline-flex items-center gap-2 px-8 py-4 bg-forest-600 hover:bg-forest-500 text-white font-semibold rounded-full transition-all duration-300 shadow-lg hover:shadow-forest-500/25 hover:-translate-y-1"
+                  id={`service-cta-${service.id}`}
+                >
+                  Get a Free Estimate
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                  </svg>
+                </a>
               </div>
             </div>
-
-            <!-- Content -->
-            <div class={index % 2 !== 0 ? 'lg:[direction:ltr]' : ''} data-animate={index % 2 === 0 ? 'right' : 'left'}>
-              <span class="inline-block text-forest-600 text-sm font-semibold uppercase tracking-[0.2em] mb-3">
-                {service.subtitle}
-              </span>
-              <h2 class="text-3xl sm:text-4xl font-bold text-charcoal-700 mb-6">{service.title}</h2>
-              <p class="text-charcoal-500 leading-relaxed text-lg mb-6">
-                {service.description}
-              </p>
-
-              <a
-                href="/contact"
-                class="inline-flex items-center gap-2 px-8 py-4 bg-forest-600 hover:bg-forest-500 text-white font-semibold rounded-full transition-all duration-300 shadow-lg hover:shadow-forest-500/25 hover:-translate-y-1"
-                id={`service-cta-${service.id}`}
-              >
-                Get a Free Estimate
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </a>
-            </div>
-          </div>
+          )}
         </div>
       </section>
     ))}
