@@ -18,11 +18,11 @@ const { beforeSrc, afterSrc, beforeAlt = 'Before', afterAlt = 'After' } = Astro.
 
   <div class="relative rounded-2xl overflow-hidden shadow-2xl">
     <!-- Labels -->
-    <span class="absolute top-4 left-4 z-10 px-3 py-1 text-xs font-bold uppercase tracking-wider bg-black/60 backdrop-blur-sm text-white rounded-full flex items-center gap-1.5 border border-white/10 select-none">
+    <span data-label="before" class="ba-label absolute top-4 left-4 z-10 px-3 py-1 text-xs font-bold uppercase tracking-wider bg-black/60 backdrop-blur-sm text-white rounded-full flex items-center gap-1.5 border border-white/10 select-none">
       <span class="w-1.5 h-1.5 rounded-full bg-red-400"></span>
       Before
     </span>
-    <span class="absolute bottom-4 right-4 z-10 px-3 py-1 text-xs font-bold uppercase tracking-wider bg-forest-600/90 backdrop-blur-sm text-white rounded-full flex items-center gap-1.5 border border-white/10 select-none">
+    <span data-label="after" class="ba-label absolute bottom-4 right-4 z-10 px-3 py-1 text-xs font-bold uppercase tracking-wider bg-forest-600/90 backdrop-blur-sm text-white rounded-full flex items-center gap-1.5 border border-white/10 select-none">
       After
       <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
     </span>
@@ -39,6 +39,44 @@ const { beforeSrc, afterSrc, beforeAlt = 'Before', afterAlt = 'After' } = Astro.
   </div>
 </div>
 
+<style>
+  .ba-label {
+    transition: opacity 0.25s ease;
+  }
+
+  .ba-label.ba-label-hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+</style>
+
 <script>
   import 'img-comparison-slider';
+
+  function initHorizontalSliders() {
+    document.querySelectorAll('.before-after-wrapper').forEach((wrapper) => {
+      const slider = wrapper.querySelector('img-comparison-slider') as any;
+      const beforeLabel = wrapper.querySelector('[data-label="before"]') as HTMLElement | null;
+      const afterLabel = wrapper.querySelector('[data-label="after"]') as HTMLElement | null;
+
+      if (!slider || slider.dataset.horizInit === 'true') return;
+      slider.dataset.horizInit = 'true';
+
+      function updateLabels() {
+        const val = slider.value ?? 50;
+        if (beforeLabel) {
+          beforeLabel.classList.toggle('ba-label-hidden', val <= 5);
+        }
+        if (afterLabel) {
+          afterLabel.classList.toggle('ba-label-hidden', val >= 95);
+        }
+      }
+
+      slider.addEventListener('slide', updateLabels);
+      updateLabels();
+    });
+  }
+
+  initHorizontalSliders();
+  document.addEventListener('astro:page-load', initHorizontalSliders);
 </script>
