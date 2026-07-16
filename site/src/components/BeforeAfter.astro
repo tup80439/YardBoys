@@ -239,7 +239,9 @@ const { beforeSrc, afterSrc, beforeAlt = 'Before', afterAlt = 'After' } = Astro.
 
         let showingAfter = false;
 
-        toggleBtn.addEventListener('click', () => {
+        toggleBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
           showingAfter = !showingAfter;
 
           toggleContainer.classList.toggle('is-after', showingAfter);
@@ -251,6 +253,19 @@ const { beforeSrc, afterSrc, beforeAlt = 'Before', afterAlt = 'After' } = Astro.
           if (toggleBtnLabel) {
             toggleBtnLabel.textContent = showingAfter ? 'After' : 'Before';
           }
+        });
+
+        // Block touch events from reaching global handlers (Lightbox, etc.)
+        toggleBtn.addEventListener('touchend', (e) => {
+          e.stopPropagation();
+        });
+
+        // Also block taps/clicks on the images themselves
+        toggleContainer.addEventListener('click', (e) => {
+          e.stopPropagation();
+        });
+        toggleContainer.addEventListener('touchend', (e) => {
+          e.stopPropagation();
         });
       }
     });
