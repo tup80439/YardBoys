@@ -9,141 +9,112 @@ interface Props {
 const { beforeSrc, afterSrc, beforeAlt = 'Before', afterAlt = 'After' } = Astro.props;
 ---
 
-<div class="ba-sidebyside" data-animate>
-  <div class="ba-sidebyside__grid">
+<div class="ba-compare" data-animate>
+  <div class="ba-compare__grid">
     <!-- Before -->
-    <div class="ba-sidebyside__card">
-      <div class="ba-sidebyside__img-wrap">
-        <img src={beforeSrc} alt={beforeAlt} class="ba-sidebyside__img" loading="lazy" />
-        <span class="ba-sidebyside__label ba-sidebyside__label--before">
-          <span class="ba-sidebyside__dot ba-sidebyside__dot--before"></span>
-          Before
-        </span>
+    <div class="ba-compare__card">
+      <img src={beforeSrc} alt={beforeAlt} class="ba-compare__img" loading="lazy" />
+      <div class="ba-compare__label ba-compare__label--before">
+        <span class="ba-compare__dot ba-compare__dot--before"></span>
+        Before
       </div>
     </div>
 
-    <!-- Divider arrow -->
-    <div class="ba-sidebyside__divider">
-      <svg class="ba-sidebyside__arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
-      </svg>
-    </div>
-
     <!-- After -->
-    <div class="ba-sidebyside__card">
-      <div class="ba-sidebyside__img-wrap">
-        <img src={afterSrc} alt={afterAlt} class="ba-sidebyside__img" loading="lazy" />
-        <span class="ba-sidebyside__label ba-sidebyside__label--after">
-          After
-          <span class="ba-sidebyside__dot ba-sidebyside__dot--after"></span>
-        </span>
+    <div class="ba-compare__card">
+      <img src={afterSrc} alt={afterAlt} class="ba-compare__img" loading="lazy" />
+      <div class="ba-compare__label ba-compare__label--after">
+        After
+        <span class="ba-compare__dot ba-compare__dot--after"></span>
       </div>
     </div>
   </div>
 </div>
 
 <style>
-  .ba-sidebyside__grid {
+  .ba-compare__grid {
     display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    align-items: center;
-    gap: 0.75rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
   }
 
   @media (max-width: 639px) {
-    .ba-sidebyside__grid {
+    .ba-compare__grid {
       grid-template-columns: 1fr;
-      gap: 0.5rem;
-    }
-    .ba-sidebyside__divider {
-      justify-self: center;
-    }
-    .ba-sidebyside__arrow {
-      transform: rotate(90deg);
+      gap: 1rem;
     }
   }
 
-  .ba-sidebyside__card {
-    border-radius: 1rem;
+  .ba-compare__card {
+    position: relative;
+    border-radius: 1.25rem;
     overflow: hidden;
-    box-shadow: 0 10px 25px -5px rgba(0,0,0,.12), 0 4px 10px -5px rgba(0,0,0,.08);
+    box-shadow:
+      0 10px 30px -8px rgba(0, 0, 0, 0.15),
+      0 4px 10px -4px rgba(0, 0, 0, 0.08);
     transition: transform 0.5s ease, box-shadow 0.5s ease;
   }
-  .ba-sidebyside__card:hover {
+
+  .ba-compare__card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 20px 40px -10px rgba(0,0,0,.18);
+    box-shadow:
+      0 20px 40px -10px rgba(0, 0, 0, 0.2),
+      0 8px 16px -6px rgba(0, 0, 0, 0.1);
   }
 
-  .ba-sidebyside__img-wrap {
-    position: relative;
-    aspect-ratio: 4 / 3;
-    overflow: hidden;
-  }
-
-  .ba-sidebyside__img {
+  .ba-compare__img {
+    display: block;
     width: 100%;
-    height: 100%;
+    aspect-ratio: 4 / 3;
     object-fit: cover;
     transition: transform 0.7s ease;
   }
-  .ba-sidebyside__card:hover .ba-sidebyside__img {
-    transform: scale(1.05);
+
+  .ba-compare__card:hover .ba-compare__img {
+    transform: scale(1.04);
   }
 
-  .ba-sidebyside__label {
+  .ba-compare__label {
     position: absolute;
-    top: 0.75rem;
-    padding: 0.25rem 0.75rem;
-    font-size: 0.7rem;
+    bottom: 1rem;
+    padding: 0.4rem 1rem;
+    font-size: 0.75rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.12em;
+    letter-spacing: 0.1em;
     border-radius: 9999px;
     display: inline-flex;
     align-items: center;
-    gap: 0.375rem;
-    user-select: none;
-    border: 1px solid rgba(255,255,255,.1);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    gap: 0.4rem;
     color: #fff;
-  }
-  .ba-sidebyside__label--before {
-    left: 0.75rem;
-    background: rgba(0,0,0,.55);
-  }
-  .ba-sidebyside__label--after {
-    right: 0.75rem;
-    background: rgba(34, 120, 69, .85);
+    user-select: none;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
   }
 
-  .ba-sidebyside__dot {
-    width: 0.375rem;
-    height: 0.375rem;
-    border-radius: 9999px;
-  }
-  .ba-sidebyside__dot--before {
-    background: #f87171;
-  }
-  .ba-sidebyside__dot--after {
-    background: #fff;
+  .ba-compare__label--before {
+    left: 1rem;
+    background: rgba(0, 0, 0, 0.6);
   }
 
-  .ba-sidebyside__divider {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.5rem;
-    height: 2.5rem;
+  .ba-compare__label--after {
+    right: 1rem;
+    background: rgba(34, 120, 69, 0.85);
+  }
+
+  .ba-compare__dot {
+    width: 0.4rem;
+    height: 0.4rem;
     border-radius: 9999px;
-    background: linear-gradient(135deg, #227845, #2d9e5e);
-    box-shadow: 0 4px 12px rgba(34, 120, 69, .35);
     flex-shrink: 0;
   }
 
-  .ba-sidebyside__arrow {
-    width: 1.25rem;
-    height: 1.25rem;
-    color: #fff;
+  .ba-compare__dot--before {
+    background: #f87171;
+  }
+
+  .ba-compare__dot--after {
+    background: #fff;
   }
 </style>
