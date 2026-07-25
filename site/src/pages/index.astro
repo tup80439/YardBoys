@@ -10,7 +10,8 @@ const services = [
   {
     title: 'Yard Clean Up',
     description: 'Get your yard looking great with our expert cleanup services. We handle everything from debris removal to hedge trimming.',
-    image: '/images/front-corner-after-edited.png',
+    image: '/images/people-operating-heavy-duty-leaf-blower.jpg',
+    attribution: 'Image by teksomolika on Magnific.',
   },
   {
     title: 'Mulch Delivery & Installation',
@@ -123,6 +124,7 @@ const testimonials = [
               title={service.title}
               description={service.description}
               image={service.image}
+              attribution={service.attribution}
               delay={String((i + 1) * 100)}
             />
           ))}

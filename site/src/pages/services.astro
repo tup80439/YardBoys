@@ -10,7 +10,8 @@ const services = [
     title: 'Yard Clean Up',
     subtitle: 'Fall & Spring Cleanup Services',
     description: 'Get your yard looking great with our expert cleanup services at Yard Boys. We handle everything from debris removal to hedge trimming, using efficient practices and top-quality equipment. Whether you need a one-time cleanup or regular maintenance, we\'re here to help. Contact us today to schedule your service and enjoy a beautifully maintained yard.',
-    image: '/images/front-corner-after-edited.png',
+    image: '/images/people-operating-heavy-duty-leaf-blower.jpg',
+    attribution: 'Image by teksomolika on Magnific.',
     icon: '🍂',
   },
   {
@@ -90,6 +91,9 @@ const services = [
                   loading="lazy"
                 />
               </div>
+              {service.attribution && (
+                <p class="text-charcoal-500 text-xs mt-2 text-center" style="font-size: 12pt;">{service.attribution}</p>
+              )}
               <!-- Service badge -->
               <div class="absolute -top-4 -left-4 w-16 h-16 bg-forest-600 rounded-2xl flex items-center justify-center text-2xl shadow-xl">
                 {service.icon}
