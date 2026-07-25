@@ -1,0 +1,120 @@
+---
+interface Props {
+  beforeSrc: string;
+  afterSrc: string;
+  beforeAlt?: string;
+  afterAlt?: string;
+}
+
+const { beforeSrc, afterSrc, beforeAlt = 'Before', afterAlt = 'After' } = Astro.props;
+---
+
+<div class="ba-compare" data-animate>
+  <div class="ba-compare__grid">
+    <!-- Before -->
+    <div class="ba-compare__card">
+      <img src={beforeSrc} alt={beforeAlt} class="ba-compare__img" loading="lazy" />
+      <div class="ba-compare__label ba-compare__label--before">
+        <span class="ba-compare__dot ba-compare__dot--before"></span>
+        Before
+      </div>
+    </div>
+
+    <!-- After -->
+    <div class="ba-compare__card">
+      <img src={afterSrc} alt={afterAlt} class="ba-compare__img" loading="lazy" />
+      <div class="ba-compare__label ba-compare__label--after">
+        After
+        <span class="ba-compare__dot ba-compare__dot--after"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .ba-compare__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
+
+  @media (max-width: 639px) {
+    .ba-compare__grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+  }
+
+  .ba-compare__card {
+    position: relative;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    box-shadow:
+      0 10px 30px -8px rgba(0, 0, 0, 0.15),
+      0 4px 10px -4px rgba(0, 0, 0, 0.08);
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+  }
+
+  .ba-compare__card:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 20px 40px -10px rgba(0, 0, 0, 0.2),
+      0 8px 16px -6px rgba(0, 0, 0, 0.1);
+  }
+
+  .ba-compare__img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    transition: transform 0.7s ease;
+  }
+
+  .ba-compare__card:hover .ba-compare__img {
+    transform: scale(1.04);
+  }
+
+  .ba-compare__label {
+    position: absolute;
+    bottom: 1rem;
+    padding: 0.4rem 1rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: #fff;
+    user-select: none;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .ba-compare__label--before {
+    left: 1rem;
+    background: rgba(0, 0, 0, 0.6);
+  }
+
+  .ba-compare__label--after {
+    right: 1rem;
+    background: rgba(34, 120, 69, 0.85);
+  }
+
+  .ba-compare__dot {
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 9999px;
+    flex-shrink: 0;
+  }
+
+  .ba-compare__dot--before {
+    background: #f87171;
+  }
+
+  .ba-compare__dot--after {
+    background: #fff;
+  }
+</style>

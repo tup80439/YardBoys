@@ -9,11 +9,11 @@ interface Props {
 const { beforeSrc, afterSrc, beforeAlt = 'Before', afterAlt = 'After' } = Astro.props;
 ---
 
-<div class="before-after-wrapper relative" data-animate>
+<div class="before-after-vertical-wrapper relative" data-animate>
   <!-- Desktop header -->
   <div class="ba-desktop-only flex items-center gap-2 mb-4">
     <div class="h-px flex-1 bg-gradient-to-r from-transparent to-forest-500/30"></div>
-    <span class="text-xs font-semibold uppercase tracking-[0.2em] text-forest-600">Drag to Compare</span>
+    <span class="text-xs font-semibold uppercase tracking-[0.2em] text-forest-600">Slide to Compare</span>
     <div class="h-px flex-1 bg-gradient-to-l from-transparent to-forest-500/30"></div>
   </div>
 
@@ -29,12 +29,13 @@ const { beforeSrc, afterSrc, beforeAlt = 'Before', afterAlt = 'After' } = Astro.
       <span class="w-1.5 h-1.5 rounded-full bg-white"></span>
     </span>
 
-    <img-comparison-slider class="w-full">
+    <img-comparison-slider class="w-full" direction="vertical">
       <img slot="first" src={beforeSrc} alt={beforeAlt} class="w-full h-full object-cover" />
       <img slot="second" src={afterSrc} alt={afterAlt} class="w-full h-full object-cover" />
-      <div slot="handle" class="w-11 h-11 flex items-center justify-center cursor-grab active:cursor-grabbing">
+      <!-- Counter-rotate -90deg to undo library's shadow DOM rotate(90deg) on vertical handles -->
+      <div slot="handle" class="w-11 h-11 flex items-center justify-center cursor-grab active:cursor-grabbing" style="transform: rotate(-90deg)">
         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 7l-5 5 5 5M15 7l5 5-5 5" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 9l5-5 5 5M7 15l5 5 5-5" />
         </svg>
       </div>
     </img-comparison-slider>
@@ -204,15 +205,15 @@ const { beforeSrc, afterSrc, beforeAlt = 'Before', afterAlt = 'After' } = Astro.
 <script>
   import 'img-comparison-slider';
 
-  function initHorizontalSliders() {
-    document.querySelectorAll('.before-after-wrapper').forEach((wrapper) => {
+  function initVerticalSliders() {
+    document.querySelectorAll('.before-after-vertical-wrapper').forEach((wrapper) => {
       const slider = wrapper.querySelector('img-comparison-slider') as any;
       const beforeLabel = wrapper.querySelector('[data-label="before"]') as HTMLElement | null;
       const afterLabel = wrapper.querySelector('[data-label="after"]') as HTMLElement | null;
 
       // ── Desktop slider label logic ──
-      if (slider && slider.dataset.horizInit !== 'true') {
-        slider.dataset.horizInit = 'true';
+      if (slider && slider.dataset.vertInit !== 'true') {
+        slider.dataset.vertInit = 'true';
 
         function updateLabels() {
           const val = slider.value ?? 50;
@@ -271,6 +272,6 @@ const { beforeSrc, afterSrc, beforeAlt = 'Before', afterAlt = 'After' } = Astro.
     });
   }
 
-  initHorizontalSliders();
-  document.addEventListener('astro:page-load', initHorizontalSliders);
+  initVerticalSliders();
+  document.addEventListener('astro:page-load', initVerticalSliders);
 </script>

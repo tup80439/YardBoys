@@ -4,23 +4,30 @@ import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import ServiceCard from '../components/ServiceCard.astro';
 import BeforeAfter from '../components/BeforeAfter.astro';
+import BeforeAfterVertical from '../components/BeforeAfterVertical.astro';
 import TestimonialCard from '../components/TestimonialCard.astro';
+import Lightbox from '../components/Lightbox.astro';
 
 const services = [
+  {
+    title: 'Landscape Design & Hardscaping',
+    description: 'Design through to build: patios, walkways, retaining walls, and outdoor living spaces — built to last.',
+    image: '/images/hardscape-patio.jpg',
+  },
+  {
+    title: 'Drainage Work',
+    description: 'Drainage fixes for standing water, erosion, and runoff — solved properly, not patched.',
+    image: '/images/drain-work.jpg',
+  },
+  {
+    title: 'Seasonal Clean Up',
+    description: 'Seasonal clean ups that clear leaves, debris, and overgrowth — leaving the property looking sharp for the season ahead.',
+    image: '/images/front-corner-after-edited.png',
+  },
   {
     title: 'Mulch Delivery & Installation',
     description: 'Enhance your garden\'s health and curb appeal with our premium mulch delivery and installation services.',
     image: '/images/mulch-delivery.jpg',
-  },
-  {
-    title: 'Landscape Construction',
-    description: 'Transform your outdoor space with expert landscape construction — patios, water features, retaining walls, and more.',
-    image: '/images/landscape-costruction.png',
-  },
-  {
-    title: 'Pruning & Trimming',
-    description: 'Professional pruning and trimming to keep your landscape looking its best — shaping bushes, hedges, and trees.',
-    image: '/images/prunning-trimming.png',
   },
   {
     title: 'Yard Clean Up',
@@ -55,6 +62,24 @@ const testimonials = [
     quote: 'Just had my yard mulched by Yard Boys and it looks the best that it has in years. The guys were awesome. Did a great job, cleaned up after themselves and just really enhanced the look of my property. Thanks guys!',
     author: 'Madeline F.',
   },
+];
+
+const galleryImages = [
+  { src: '/images/patio-overgrowth-after.jpg', alt: 'Patio area after complete overgrowth removal and cleanup' },
+  { src: '/images/landscaping-project-after.jpg', alt: 'Completed landscaping project with fresh plantings' },
+  { src: '/images/overgrown-landscape-after.jpg', alt: 'Landscape cleared of dense overgrowth' },
+  { src: '/images/finished-front-house.jpg', alt: 'Completed front yard landscaping project' },
+  { src: '/images/mulch-bush-cleanup.jpg', alt: 'Fresh mulch installation with trimmed bushes' },
+  { src: '/images/black-mulch-front-yard.jpg', alt: 'Black mulch beds along front yard walkway' },
+  { src: '/images/mulch-trees-bricks.jpg', alt: 'Mulch beds with decorative brick border and trees' },
+  { src: '/images/mulch-bed-flowers.jpg', alt: 'Mulch bed with colorful flower plantings' },
+  { src: '/images/tree-removal.jpg', alt: 'Emergency tree removal from residential roof' },
+  { src: '/images/yardboys-crew-working.jpg', alt: 'Yard Boys crew at work on a landscaping project' },
+  { src: '/images/mulch-mailbox-curb.jpg', alt: 'Curb appeal upgrade with fresh mulch around mailbox' },
+  { src: '/images/island-bed-mulch.jpg', alt: 'Island mulch bed installation in front yard' },
+  { src: '/images/clean-mulch-bed.jpg', alt: 'Freshly installed mulch bed along property edge' },
+  { src: '/images/finished-mulch-job.jpg', alt: 'Completed mulch job around foundation plantings' },
+  { src: '/images/christmas-lights-display.jpg', alt: 'Christmas lights installation by Yard Boys' },
 ];
 ---
 
@@ -126,7 +151,7 @@ const testimonials = [
           <span class="inline-block text-forest-600 text-sm font-semibold uppercase tracking-[0.2em] mb-4">What We Do</span>
           <h2 class="text-4xl sm:text-5xl font-bold text-charcoal-700 mb-4">Our Services</h2>
           <p class="text-charcoal-400 max-w-2xl mx-auto text-lg">
-            We do more than the competition. Yard Boys can take care of all of your landscaping needs!
+            From landscape design and construction to seasonal maintenance — Yard Boys handles it all.
           </p>
         </div>
 
@@ -155,7 +180,7 @@ const testimonials = [
 
     <!-- ═══════════ BEFORE / AFTER ═══════════ -->
     <section id="before-after" class="py-24 lg:py-32 bg-white">
-      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12" data-animate>
           <span class="inline-block text-forest-600 text-sm font-semibold uppercase tracking-[0.2em] mb-4">See the Difference</span>
           <h2 class="text-4xl sm:text-5xl font-bold text-charcoal-700 mb-4">Our Work Speaks</h2>
@@ -164,14 +189,77 @@ const testimonials = [
           </p>
         </div>
 
-        <BeforeAfter
-          beforeSrc="/images/fence-before.png"
-          afterSrc="/images/fence-after.png"
-          beforeAlt="Overgrown fence line before Yard Boys cleanup"
-          afterAlt="Clean, mulched fence line with new plantings after Yard Boys transformation"
-        />
+        <!-- Featured slider — patio/overgrowth cleanup (high-ticket) -->
+        <div class="max-w-4xl mx-auto mb-12">
+          <BeforeAfterVertical
+            beforeSrc="/images/patio-overgrowth-before.jpg"
+            afterSrc="/images/patio-overgrowth-after.jpg"
+            beforeAlt="Patio area overgrown with weeds and debris before Yard Boys cleanup"
+            afterAlt="Patio area fully cleared and restored after Yard Boys transformation"
+          />
+        </div>
+
+        <!-- Grid of additional sliders -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <BeforeAfterVertical
+            beforeSrc="/images/overgrowth-cleanup-before.jpg"
+            afterSrc="/images/overgrowth-cleanup-after.jpg"
+            beforeAlt="Heavily overgrown residential property before cleanup"
+            afterAlt="Clean, maintained property after Yard Boys overgrowth removal"
+          />
+          <BeforeAfterVertical
+            beforeSrc="/images/overgrown-landscape-before.jpg"
+            afterSrc="/images/overgrown-landscape-after.jpg"
+            beforeAlt="Overgrown landscape beds before Yard Boys service"
+            afterAlt="Neatly trimmed landscape beds after professional cleanup"
+          />
+          <BeforeAfter
+            beforeSrc="/images/fence-before.png"
+            afterSrc="/images/fence-after.png"
+            beforeAlt="Overgrown fence line before Yard Boys cleanup"
+            afterAlt="Clean, mulched fence line with new plantings after Yard Boys transformation"
+          />
+          <BeforeAfterVertical
+            beforeSrc="/images/yard-cleanup-before.jpg"
+            afterSrc="/images/yard-cleanup-after.jpg"
+            beforeAlt="Yard cluttered with debris before seasonal cleanup"
+            afterAlt="Fresh, tidy yard after Yard Boys seasonal cleanup service"
+          />
+        </div>
       </div>
     </section>
+
+    <!-- ═══════════ GALLERY — COMPLETED PROJECTS ═══════════ -->
+    <section id="gallery" class="py-24 lg:py-32 bg-cream-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16" data-animate>
+          <span class="inline-block text-forest-600 text-sm font-semibold uppercase tracking-[0.2em] mb-4">Our Portfolio</span>
+          <h2 class="text-4xl sm:text-5xl font-bold text-charcoal-700 mb-4">Completed Projects</h2>
+          <p class="text-charcoal-400 max-w-2xl mx-auto text-lg">
+            A look at the work we've delivered for residential and commercial clients across PA. Click any image to enlarge.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          {galleryImages.map((img, i) => (
+            <div
+              class="rounded-xl overflow-hidden shadow-lg group cursor-pointer aspect-square"
+              data-animate
+              data-delay={String(Math.min((i + 1) * 50, 400))}
+            >
+              <img
+                src={img.src}
+                alt={img.alt}
+                class="lightbox-trigger w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 cursor-pointer"
+                loading="lazy"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <Lightbox />
 
     <!-- ═══════════ ABOUT BLURB ═══════════ -->
     <section id="about-preview" class="py-24 lg:py-32 relative overflow-hidden">
@@ -254,7 +342,7 @@ const testimonials = [
     </section>
 
     <!-- ═══════════ CTA BANNER ═══════════ -->
-    <section id="cta-banner" class="relative py-24 lg:py-32 overflow-hidden">
+    <section id="cta-banner" class="relative py-14 lg:py-20 overflow-hidden">
       <div
         class="absolute inset-0 parallax-bg"
         style="background-image: url('/images/front-walk-after.png');"
@@ -262,23 +350,23 @@ const testimonials = [
       <div class="absolute inset-0 bg-charcoal-900/80 backdrop-blur-sm"></div>
 
       <div class="relative z-10 max-w-4xl mx-auto px-4 text-center">
-        <h2 class="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6" data-animate>
-          Ready to Transform<br />Your Yard?
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4" data-animate>
+          Ready to Transform Your Yard?
         </h2>
-        <p class="text-white/70 text-lg mb-8 max-w-xl mx-auto" data-animate data-delay="100">
+        <p class="text-white/70 text-lg mb-6 max-w-xl mx-auto" data-animate data-delay="100">
           Let Yard Boys handle all your landscaping needs. Call us today for a free estimate.
         </p>
 
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4" data-animate data-delay="200">
           <a
-            href="tel:2156961235"
+            href="tel:2152549563"
             class="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 bg-forest-600 hover:bg-forest-500 text-white font-bold text-xl rounded-full transition-all duration-300 shadow-xl hover:shadow-forest-500/30 hover:-translate-y-1"
             id="cta-phone"
           >
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
             </svg>
-            (215) 696-1235
+            215-254-9563
           </a>
           <a
             href="/contact"

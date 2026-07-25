@@ -62,6 +62,11 @@ img-comparison-slider {
   --default-handle-shadow: 0 0 10px rgba(0,0,0,0.3);
   border-radius: 1rem;
   overflow: hidden;
+  touch-action: none;
+}
+
+img-comparison-slider img {
+  pointer-events: none;
 }
 
 img-comparison-slider::part(divider) {
@@ -69,6 +74,9 @@ img-comparison-slider::part(divider) {
 }
 
 img-comparison-slider::part(handle) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 44px;
   height: 44px;
   border-radius: 50%;
