@@ -29,20 +29,38 @@ const services = [
     description: 'Enhance your garden\'s health and curb appeal with our premium mulch delivery and installation services.',
     image: '/images/mulch-delivery.jpg',
   },
+  {
+    title: 'Yard Clean Up',
+    description: 'Get your yard looking great with our expert cleanup services. We handle everything from debris removal to hedge trimming.',
+    image: '/images/people-operating-heavy-duty-leaf-blower.jpg',
+    attribution: 'Image by teksomolika on Magnific.',
+  },
 ];
 
 const testimonials = [
   {
-    quote: 'I highly recommend this company. If you are a red blooded American, you care about supporting a local company, you care about local small business development, and supporting young entrepreneurs…..this company is for you! They care about what they do, and believe in the value of working hard for their $….',
-    author: 'Robert F.',
+    quote: 'So happy with the work Yard Boys did for the front of my home this spring. Communication was excellent & work was done promptly. They were able to take out overgrown bushes and a nuisance tree & replaced with beautiful boxwoods and fresh mulch.',
+    author: 'Amanda S.',
   },
   {
-    quote: 'Yard boys did a great job with pruning all my bushes, tackling a forest of weeds, and putting down fresh mulch! They were patient and kind, gave a fair estimate, and finished it in a timely matter with great care. I was so happy with their work, I highly recommend them and plan to use them in the future!',
-    author: 'Michelle D.',
+    quote: 'I used Yard Boys for a major yard clean-up and mulching. Joe was immediately responsive to my initial inquiry and came out to walk through the entire yard with me and talk through the level of work I wanted. He and his crew did an outstanding job.',
+    author: 'Shawn S.',
   },
   {
-    quote: 'The Yard Boys did a thorough job cleaning out overgrown bushes in our yard to make space for a new fence. They were very prompt in communicating with us throughout. We definitely recommend them!',
-    author: 'Stanley P.',
+    quote: 'The Yard Boys arrived at 8:30 am, worked all day and left my home looking wonderful. They pulled out all the foundation planting and replaced with new shrubs. They trimmed two small trees. I am very pleased with service and price.',
+    author: 'Nancy M.',
+  },
+  {
+    quote: 'The Yard Boys are AMAZING!! Quick to come out for an estimate, very communicative and attentive to my requests and quickly completed the job. Everything was cleaned up nicely. I highly recommend.',
+    author: 'Lauren B.',
+  },
+  {
+    quote: 'Joe from Yard Boys landscaping and his crew did an awesome job. They were professional, knew exactly what they were doing. Easy to talk to and explained what they were going to do. Also reasonable pricing. I highly recommend them 100%.',
+    author: 'Donna C.',
+  },
+  {
+    quote: 'Just had my yard mulched by Yard Boys and it looks the best that it has in years. The guys were awesome. Did a great job, cleaned up after themselves and just really enhanced the look of my property. Thanks guys!',
+    author: 'Madeline F.',
   },
 ];
 
@@ -143,6 +161,7 @@ const galleryImages = [
               title={service.title}
               description={service.description}
               image={service.image}
+              attribution={service.attribution}
               delay={String((i + 1) * 100)}
             />
           ))}
@@ -307,7 +326,7 @@ const galleryImages = [
               </svg>
             ))}
           </div>
-          <p class="text-charcoal-400">5 out of 5 rating</p>
+          <p class="text-charcoal-400">5.0 rating · 31 Google Reviews</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
