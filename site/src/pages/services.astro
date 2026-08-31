@@ -91,6 +91,28 @@ const services = [
     beforeImage: '/images/land-clearing-before.jpg',
     afterImage: '/images/land-clearing-after.jpg',
   },
+  {
+    id: 'tree-care',
+    title: 'Tree Care',
+    subtitle: 'Pruning, Removal & Stump Grinding',
+    description: 'Hands-on tree work for residential properties — from shaping young trees to removing storm damage and grinding stumps. We handle the jobs that keep your yard safe, clean, and looking right.',
+    image: '/images/tree-removal.jpg',
+    icon: '🪓',
+    details: [
+      'Small tree removal',
+      'Sapling/invasive tree removal',
+      'Ornamental tree pruning',
+      'Low-limb removal',
+      'Small deadwood removal that can be reached safely from the ground',
+      'Tree shaping/structural pruning on young trees',
+      'Clearance pruning around fences, sheds, driveways, patios, etc.',
+      'Storm cleanup after limbs have already fallen',
+      'Cutting small stumps low to the ground',
+      'Stump grinding',
+      'Tree planting/replacement',
+      'Large shrub/small tree reductions',
+    ],
+  },
 ];
 ---
 
@@ -184,6 +206,19 @@ const services = [
                 <p class="text-charcoal-500 leading-relaxed text-lg mb-6">
                   {service.description}
                 </p>
+
+                {service.details && (
+                  <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 mb-6">
+                    {service.details.map((item: string) => (
+                      <li class="flex items-start gap-2 text-charcoal-500 text-sm leading-relaxed">
+                        <svg class="w-4 h-4 text-forest-500 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                        </svg>
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                )}
 
                 <a
                   href="/contact"
