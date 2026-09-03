@@ -265,6 +265,9 @@ const serviceOptions = [
 </Layout>
 
 <script>
+  // Global gtag function is loaded via the Google tag in Layout.astro <head>
+  declare function gtag(...args: any[]): void;
+
   import { initForm as initFormspree } from '@formspree/ajax';
 
   // To change where emails go:
@@ -378,6 +381,26 @@ const serviceOptions = [
         if (submitLabel) submitLabel.textContent = 'Sending...';
       },
       onSuccess: () => {
+        // ── Google Ads conversion tracking ──
+        // Fire a conversion event so Google Ads records this form
+        // submission as a lead. The gtag function is loaded globally
+        // via the Google tag in Layout.astro.
+        if (typeof gtag === 'function') {
+          // Standard "generate_lead" event for Google Ads enhanced conversions
+          gtag('event', 'generate_lead', {
+            send_to: 'AW-16996247818',
+            value: 1.0,
+            currency: 'USD',
+          });
+
+          // Specific conversion action event — replace CONVERSION_LABEL
+          // with the actual label from Google Ads > Goals > Conversions
+          // (format: "AW-16996247818/AbCdEfGhIjKl")
+          // gtag('event', 'conversion', {
+          //   send_to: 'AW-16996247818/CONVERSION_LABEL',
+          // });
+        }
+
         setStatus('success', "We'll get back to you as soon as possible.");
         form.reset();
       },
