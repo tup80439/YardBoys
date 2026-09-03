@@ -27,15 +27,58 @@ const { title, description = 'Yard Boys — Professional landscaping services in
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:image" content="/images/optimized/hero-aerial.webp" />
     <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#4A7C2E" />
     <link rel="icon" type="image/jpeg" href="/images/logo.jpg" />
+    <link rel="canonical" href={`https://yardboysllc.com${Astro.url.pathname}`} />
+
+    <!-- Font: preload critical weight, then load full range -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
     <title>{title}</title>
+
+    <!-- LocalBusiness structured data (JSON-LD) -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Yard Boys",
+      "image": "/images/optimized/hero-aerial.webp",
+      "telephone": "+1-215-254-9563",
+      "email": "office@yardboysllc.com",
+      "url": "https://yardboysllc.com",
+      "description": "Professional landscaping services in PA. Yard cleanup, mulch delivery, landscape construction, pruning & trimming.",
+      "foundingDate": "2018",
+      "areaServed": {
+        "@type": "State",
+        "name": "Pennsylvania"
+      },
+      "sameAs": [
+        "https://www.facebook.com/Yardboys.pa/",
+        "https://www.instagram.com/yardboys.pa/"
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5",
+        "reviewCount": "50"
+      }
+    })} />
   </head>
   <body class="min-h-screen antialiased">
     <slot />
+
+    <!-- Scroll-to-top button -->
+    <button
+      id="scroll-top-btn"
+      class="scroll-top-btn"
+      aria-label="Scroll to top"
+    >
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7" />
+      </svg>
+    </button>
 
     <script>
       // Scroll animation observer
@@ -60,11 +103,37 @@ const { title, description = 'Yard Boys — Professional landscaping services in
         });
       }
 
+      // Scroll-to-top button logic
+      function initScrollTop() {
+        const btn = document.getElementById('scroll-top-btn');
+        if (!btn || btn.dataset.scrollInit === 'true') return;
+        btn.dataset.scrollInit = 'true';
+
+        function handleScroll() {
+          if (window.scrollY > 600) {
+            btn.classList.add('visible');
+          } else {
+            btn.classList.remove('visible');
+          }
+        }
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        handleScroll();
+
+        btn.addEventListener('click', () => {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+      }
+
       // Run on initial load
       initAnimations();
+      initScrollTop();
 
       // Re-run after Astro page transitions
-      document.addEventListener('astro:page-load', initAnimations);
+      document.addEventListener('astro:page-load', () => {
+        initAnimations();
+        initScrollTop();
+      });
     </script>
   </body>
 </html>

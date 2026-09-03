@@ -63,6 +63,17 @@ const galleryImages = [
   { src: '/images/finished-mulch-job.jpg', alt: 'Completed mulch job around foundation plantings' },
   { src: '/images/christmas-lights-display.jpg', alt: 'Christmas lights installation by Yard Boys' },
 ];
+
+/**
+ * Utility: derive WebP paths from original image path
+ */
+function webp(src: string) {
+  const name = src.split('/').pop()!.replace(/\.(jpg|jpeg|png)$/i, '');
+  return {
+    full: `/images/optimized/${name}.webp`,
+    thumb: `/images/optimized/${name}-thumb.webp`,
+  };
+}
 ---
 
 <Layout title="Yard Boys — Professional Landscaping Services in PA">
@@ -74,7 +85,7 @@ const galleryImages = [
       <!-- Parallax Background -->
       <div
         class="absolute inset-0 parallax-bg"
-        style="background-image: url('/images/hero-aerial.jpeg');"
+        style="background-image: url('/images/optimized/hero-aerial.webp');"
       ></div>
       <div class="hero-overlay absolute inset-0"></div>
 
@@ -91,19 +102,19 @@ const galleryImages = [
           Serving PA Since 2018
         </div>
 
-        <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black text-white leading-[1.1] mb-6 animate-fade-in-up" style="animation-delay: 0.2s;">
+        <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white leading-[1.1] mb-6 animate-fade-in-up" style="animation-delay: 0.2s;">
           Your Yard,<br />
           <span class="text-gradient">Our Passion</span>
         </h1>
 
-        <p class="text-lg sm:text-xl text-white/70 max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in-up" style="animation-delay: 0.4s;">
+        <p class="text-base sm:text-lg md:text-xl text-white/70 max-w-2xl mx-auto mb-10 leading-relaxed animate-fade-in-up" style="animation-delay: 0.4s;">
           We do more than the competition. Yard Boys can take care of all of your landscaping needs — from cleanup to complete landscape construction.
         </p>
 
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up" style="animation-delay: 0.6s;">
           <a
             href="/contact"
-            class="w-full sm:w-auto px-8 py-4 bg-forest-600 hover:bg-forest-500 text-white font-bold text-lg rounded-full transition-all duration-300 shadow-xl hover:shadow-forest-500/30 hover:-translate-y-1"
+            class="cta-glow w-full sm:w-auto px-8 py-4 bg-forest-600 hover:bg-forest-500 text-white font-bold text-lg rounded-full transition-all duration-300 shadow-xl hover:shadow-forest-500/30 hover:-translate-y-1"
             id="hero-cta-estimate"
           >
             Get a Free Estimate
@@ -119,7 +130,7 @@ const galleryImages = [
       </div>
 
       <!-- Scroll indicator — outside content div, pinned to section bottom -->
-      <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 animate-bounce">
+      <div class="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 animate-bounce hidden sm:block">
         <svg class="w-6 h-6 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
         </svg>
@@ -127,12 +138,12 @@ const galleryImages = [
     </section>
 
     <!-- ═══════════ SERVICES PREVIEW ═══════════ -->
-    <section id="services-preview" class="py-24 lg:py-32 bg-cream-50">
+    <section id="services-preview" class="py-20 lg:py-32 bg-cream-50">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16" data-animate>
           <span class="inline-block text-forest-600 text-sm font-semibold uppercase tracking-[0.2em] mb-4">What We Do</span>
-          <h2 class="text-4xl sm:text-5xl font-bold text-charcoal-700 mb-4">Our Services</h2>
-          <p class="text-charcoal-400 max-w-2xl mx-auto text-lg">
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-charcoal-700 mb-4">Our Services</h2>
+          <p class="text-charcoal-400 max-w-2xl mx-auto text-base sm:text-lg">
             From landscape design and construction to seasonal maintenance — Yard Boys handles it all.
           </p>
         </div>
@@ -149,7 +160,7 @@ const galleryImages = [
         </div>
 
         <div class="text-center mt-12" data-animate>
-          <a href="/services" class="inline-flex items-center gap-2 px-8 py-4 bg-charcoal-700 hover:bg-charcoal-600 text-white font-semibold rounded-full transition-all duration-300 hover:-translate-y-1 shadow-lg">
+          <a href="/services" class="cta-glow inline-flex items-center gap-2 px-8 py-4 bg-charcoal-700 hover:bg-charcoal-600 text-white font-semibold rounded-full transition-all duration-300 hover:-translate-y-1 shadow-lg">
             View All Services
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -160,12 +171,12 @@ const galleryImages = [
     </section>
 
     <!-- ═══════════ BEFORE / AFTER ═══════════ -->
-    <section id="before-after" class="py-24 lg:py-32 bg-white">
+    <section id="before-after" class="py-20 lg:py-32 bg-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-12" data-animate>
           <span class="inline-block text-forest-600 text-sm font-semibold uppercase tracking-[0.2em] mb-4">See the Difference</span>
-          <h2 class="text-4xl sm:text-5xl font-bold text-charcoal-700 mb-4">Our Work Speaks</h2>
-          <p class="text-charcoal-400 max-w-xl mx-auto text-lg">
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-charcoal-700 mb-4">Our Work Speaks</h2>
+          <p class="text-charcoal-400 max-w-xl mx-auto text-base sm:text-lg">
             Drag the slider to see the transformation we deliver for our clients.
           </p>
         </div>
@@ -211,31 +222,41 @@ const galleryImages = [
     </section>
 
     <!-- ═══════════ GALLERY — COMPLETED PROJECTS ═══════════ -->
-    <section id="gallery" class="py-24 lg:py-32 bg-cream-50">
+    <section id="gallery" class="py-20 lg:py-32 bg-cream-50">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16" data-animate>
           <span class="inline-block text-forest-600 text-sm font-semibold uppercase tracking-[0.2em] mb-4">Our Portfolio</span>
-          <h2 class="text-4xl sm:text-5xl font-bold text-charcoal-700 mb-4">Completed Projects</h2>
-          <p class="text-charcoal-400 max-w-2xl mx-auto text-lg">
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-charcoal-700 mb-4">Completed Projects</h2>
+          <p class="text-charcoal-400 max-w-2xl mx-auto text-base sm:text-lg">
             A look at the work we've delivered for residential and commercial clients across PA. Click any image to enlarge.
           </p>
         </div>
 
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-          {galleryImages.map((img, i) => (
-            <div
-              class="rounded-xl overflow-hidden shadow-lg group cursor-pointer aspect-square"
-              data-animate
-              data-delay={String(Math.min((i + 1) * 50, 400))}
-            >
-              <img
-                src={img.src}
-                alt={img.alt}
-                class="lightbox-trigger w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 cursor-pointer"
-                loading="lazy"
-              />
-            </div>
-          ))}
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+          {galleryImages.map((img, i) => {
+            const w = webp(img.src);
+            return (
+              <div
+                class="rounded-xl overflow-hidden shadow-lg group cursor-pointer aspect-square"
+                data-animate
+                data-delay={String(Math.min((i + 1) * 50, 400))}
+              >
+                <picture>
+                  <source srcset={w.thumb} type="image/webp" />
+                  <img
+                    src={img.src}
+                    alt={img.alt}
+                    class="lightbox-trigger w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 cursor-pointer"
+                    loading="lazy"
+                    decoding="async"
+                    width="600"
+                    height="600"
+                    data-full-webp={w.full}
+                  />
+                </picture>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -243,11 +264,11 @@ const galleryImages = [
     <Lightbox />
 
     <!-- ═══════════ ABOUT BLURB ═══════════ -->
-    <section id="about-preview" class="py-24 lg:py-32 relative overflow-hidden">
+    <section id="about-preview" class="py-20 lg:py-32 relative overflow-hidden">
       <!-- Parallax BG -->
       <div
         class="absolute inset-0 parallax-bg opacity-10"
-        style="background-image: url('/images/facade-5.png');"
+        style={`background-image: url('${webp('/images/facade-5.png').full}');`}
       ></div>
 
       <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -255,15 +276,21 @@ const galleryImages = [
           <!-- Image -->
           <div class="relative" data-animate="left">
             <div class="rounded-2xl overflow-hidden shadow-2xl">
-              <img
-                src="/images/ron-mulch-job.jpg"
-                alt="Beautiful mulch installation by Yard Boys"
-                class="w-full h-[400px] object-cover"
-                loading="lazy"
-              />
+              <picture>
+                <source srcset={webp('/images/ron-mulch-job.jpg').full} type="image/webp" />
+                <img
+                  src="/images/ron-mulch-job.jpg"
+                  alt="Beautiful mulch installation by Yard Boys"
+                  class="w-full h-[300px] sm:h-[400px] object-cover"
+                  loading="lazy"
+                  decoding="async"
+                  width="1200"
+                  height="400"
+                />
+              </picture>
             </div>
-            <!-- Floating badge -->
-            <div class="absolute -bottom-6 -right-6 bg-forest-600 text-white px-6 py-4 rounded-2xl shadow-xl hidden sm:block">
+            <!-- Floating badge — relative on mobile, absolute on desktop -->
+            <div class="relative sm:absolute mt-4 sm:mt-0 sm:-bottom-6 sm:-right-6 bg-forest-600 text-white px-6 py-4 rounded-2xl shadow-xl inline-block">
               <p class="text-3xl font-black">5+</p>
               <p class="text-sm font-medium text-white/80">Years of Service</p>
             </div>
@@ -272,7 +299,7 @@ const galleryImages = [
           <!-- Text -->
           <div data-animate="right">
             <span class="inline-block text-forest-600 text-sm font-semibold uppercase tracking-[0.2em] mb-4">Our Story</span>
-            <h2 class="text-4xl sm:text-5xl font-bold text-charcoal-700 mb-6">Built from the<br />Ground Up</h2>
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-charcoal-700 mb-6">Built from the<br />Ground Up</h2>
             <p class="text-charcoal-500 leading-relaxed mb-6">
               The landscaping dream started when Jared and Joe were in high school getting ready to graduate and enter the real world. From 15 years old they have always found a way to provide landscaping services to their customers.
             </p>
@@ -281,7 +308,7 @@ const galleryImages = [
             </p>
             <a
               href="/about"
-              class="inline-flex items-center gap-2 px-8 py-4 border-2 border-forest-600 text-forest-600 hover:bg-forest-600 hover:text-white font-semibold rounded-full transition-all duration-300"
+              class="cta-glow inline-flex items-center gap-2 px-8 py-4 border-2 border-forest-600 text-forest-600 hover:bg-forest-600 hover:text-white font-semibold rounded-full transition-all duration-300"
               id="about-preview-cta"
             >
               Read Our Full Story
@@ -295,11 +322,11 @@ const galleryImages = [
     </section>
 
     <!-- ═══════════ TESTIMONIALS ═══════════ -->
-    <section id="testimonials" class="py-24 lg:py-32 bg-cream-100">
+    <section id="testimonials" class="py-20 lg:py-32 bg-cream-100">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16" data-animate>
           <span class="inline-block text-forest-600 text-sm font-semibold uppercase tracking-[0.2em] mb-4">Testimonials</span>
-          <h2 class="text-4xl sm:text-5xl font-bold text-charcoal-700 mb-4">What People Are Saying</h2>
+          <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-charcoal-700 mb-4">What People Are Saying</h2>
           <div class="flex items-center justify-center gap-1 mb-2">
             {Array.from({ length: 5 }).map(() => (
               <svg class="w-5 h-5 text-earth-400" fill="currentColor" viewBox="0 0 20 20">
@@ -326,22 +353,22 @@ const galleryImages = [
     <section id="cta-banner" class="relative py-14 lg:py-20 overflow-hidden">
       <div
         class="absolute inset-0 parallax-bg"
-        style="background-image: url('/images/front-walk-after.png');"
+        style={`background-image: url('${webp('/images/front-walk-after.png').full}');`}
       ></div>
       <div class="absolute inset-0 bg-charcoal-900/80 backdrop-blur-sm"></div>
 
       <div class="relative z-10 max-w-4xl mx-auto px-4 text-center">
-        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4" data-animate>
+        <h2 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4" data-animate>
           Ready to Transform Your Yard?
         </h2>
-        <p class="text-white/70 text-lg mb-6 max-w-xl mx-auto" data-animate data-delay="100">
+        <p class="text-white/70 text-base sm:text-lg mb-6 max-w-xl mx-auto" data-animate data-delay="100">
           Let Yard Boys handle all your landscaping needs. Call us today for a free estimate.
         </p>
 
         <div class="flex flex-col sm:flex-row items-center justify-center gap-4" data-animate data-delay="200">
           <a
             href="tel:2152549563"
-            class="w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 bg-forest-600 hover:bg-forest-500 text-white font-bold text-xl rounded-full transition-all duration-300 shadow-xl hover:shadow-forest-500/30 hover:-translate-y-1"
+            class="cta-glow w-full sm:w-auto flex items-center justify-center gap-3 px-8 py-4 bg-forest-600 hover:bg-forest-500 text-white font-bold text-lg sm:text-xl rounded-full transition-all duration-300 shadow-xl hover:shadow-forest-500/30 hover:-translate-y-1"
             id="cta-phone"
           >
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -351,7 +378,7 @@ const galleryImages = [
           </a>
           <a
             href="/contact"
-            class="w-full sm:w-auto px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-semibold text-lg rounded-full backdrop-blur-sm border border-white/20 transition-all duration-300 hover:-translate-y-1"
+            class="w-full sm:w-auto px-8 py-4 bg-white/10 hover:bg-white/20 text-white font-semibold text-base sm:text-lg rounded-full backdrop-blur-sm border border-white/20 transition-all duration-300 hover:-translate-y-1"
             id="cta-contact"
           >
             Request a Free Estimate

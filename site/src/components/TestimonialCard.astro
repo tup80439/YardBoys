@@ -10,7 +10,7 @@ const { quote, author, rating = 5, delay = '0' } = Astro.props;
 ---
 
 <div
-  class="relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-500 group"
+  class="relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-500 group border border-transparent hover:border-forest-200 flex flex-col"
   data-animate
   data-delay={delay}
 >
@@ -32,13 +32,13 @@ const { quote, author, rating = 5, delay = '0' } = Astro.props;
     ))}
   </div>
 
-  <!-- Quote text -->
-  <p class="text-charcoal-600 text-sm leading-relaxed italic mb-6">
+  <!-- Quote text — clamped for consistent card heights on desktop -->
+  <p class="text-charcoal-600 text-sm leading-relaxed italic mb-6 flex-1 line-clamp-6 md:line-clamp-5">
     "{quote}"
   </p>
 
   <!-- Author -->
-  <div class="flex items-center gap-3">
+  <div class="flex items-center gap-3 mt-auto">
     <div class="w-8 h-8 rounded-full bg-gradient-to-br from-forest-400 to-forest-700 flex items-center justify-center text-white text-xs font-bold">
       {author.charAt(0)}
     </div>
