@@ -254,16 +254,16 @@ export const services: Service[] = [
     subtitle: 'Holiday Light Installation',
     icon: '🎄',
     image: '/images/christmas-lights-roofline-trees.jpg',
-    summary: 'Holiday lights designed, installed, and taken down so you can just enjoy the season.',
+    summary: 'A completely hands off holiday lighting service. We design, install, maintain, take down, and store your lights.',
     description:
-      'Holiday light installation and takedown. We handle the ladders, clips, and layout so you can enjoy the season without the hassle. Residential and commercial properties.',
+      "Our Christmas lighting service is completely hands off for you. We design a display that fits your home, install everything, keep it shining all season, then take it all down after the holidays and store your lights until next year. No ladders, no tangled strands, and no boxes in your garage. Residential and commercial properties.",
     includes: [
-      'Layout planned with you before install',
-      'Roofline and gutter lighting',
-      'Wrapping trees and shrubs',
-      'Garland, wreaths, and banners',
-      'Commercial and storefront displays',
+      'Custom design planned with you before install',
+      'Professional installation on rooflines, gutters, trees, and shrubs',
+      'Service visits during the season if anything stops working',
       'Takedown after the holidays',
+      'Storage of your lights until next season',
+      'Garland, wreaths, and storefront displays available',
     ],
     gallery: [
       { src: '/images/christmas-lights-roofline-trees.jpg', alt: 'Warm white Christmas lights on the roofline, trees, and shrubs of a stucco home at dusk' },
