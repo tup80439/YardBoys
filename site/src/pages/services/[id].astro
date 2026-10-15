@@ -5,6 +5,7 @@ import Footer from '../../components/Footer.astro';
 import BeforeAfterVertical from '../../components/BeforeAfterVertical.astro';
 import Lightbox from '../../components/Lightbox.astro';
 import { services, type Service } from '../../data/services';
+import { serviceReviews } from '../../data/reviews';
 
 export function getStaticPaths() {
   return services.map((service) => ({ params: { id: service.id }, props: { service } }));
@@ -12,6 +13,7 @@ export function getStaticPaths() {
 
 const { service } = Astro.props as { service: Service };
 const others = services.filter((s) => s.id !== service.id);
+const review = serviceReviews[service.id];
 ---
 
 <Layout
@@ -73,6 +75,18 @@ const others = services.filter((s) => s.id !== service.id);
               </li>
             ))}
           </ul>
+
+          {review && (
+            <figure class="mt-8 pt-6 border-t border-charcoal-100">
+              <div class="flex gap-0.5 text-yellow-400 mb-3" aria-label="5 star review">
+                {[1, 2, 3, 4, 5].map(() => (
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
+                ))}
+              </div>
+              <blockquote class="text-charcoal-600 italic leading-relaxed">"{review.text}"</blockquote>
+              <figcaption class="text-charcoal-400 text-sm mt-3">{review.source}</figcaption>
+            </figure>
+          )}
         </div>
       </div>
     </section>
