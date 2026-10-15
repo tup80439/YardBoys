@@ -267,8 +267,16 @@ export const services: Service[] = [
     ],
     gallery: [
       { src: '/images/christmas-lights-roofline-trees.jpg', alt: 'Warm white Christmas lights on the roofline, trees, and shrubs of a stucco home at dusk' },
+      { src: '/images/christmas-lights-red-green-dormers.jpg', alt: 'Red and green C9 lights outlining dormers, roofline, and front door, seen from above' },
+      { src: '/images/christmas-lights-multicolor-brick-home.jpg', alt: 'Multicolor roofline lights with wrapped shrubs and trees on a brick colonial' },
+      { src: '/images/christmas-lights-red-white-cape-cod.jpg', alt: 'Red and warm white C9 lights on the roofline and dormers of a Cape Cod' },
+      { src: '/images/christmas-lights-aerial-warm-white.jpg', alt: 'Warm white lights on the roofline, dormer, and front porch, seen from above' },
+      { src: '/images/christmas-lights-red-white-stone-home.jpg', alt: 'Red and warm white roofline lights on a two story stone and siding home' },
+      { src: '/images/christmas-lights-warm-white-farmhouse.jpg', alt: 'Warm white lights on the gables and porch of a two story home' },
+      { src: '/images/christmas-lights-carport-ranch.jpg', alt: 'White lights along a carport gable and ranch home roofline' },
       { src: '/images/christmas-lights-finished.jpg', alt: 'Multicolor Christmas lights on a roofline and front yard trees' },
       { src: '/images/christmas-lights-display.jpg', alt: 'Warm white Christmas lights outlining a home and front porch' },
+      { src: '/images/christmas-lights-crew-install.jpg', alt: 'Yard Boys crew clipping red and green C9 lights onto a dormer' },
     ],
   },
   {
