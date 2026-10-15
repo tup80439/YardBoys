@@ -406,12 +406,13 @@ const serviceOptions = [
             currency: 'USD',
           });
 
-          // Specific conversion action event — replace CONVERSION_LABEL
-          // with the actual label from Google Ads > Goals > Conversions
-          // (format: "AW-16996247818/AbCdEfGhIjKl")
-          // gtag('event', 'conversion', {
-          //   send_to: 'AW-16996247818/CONVERSION_LABEL',
-          // });
+          // Google Ads conversion action: "Website Contact form"
+          // (Goals > Conversions > Submit lead form category)
+          gtag('event', 'conversion', {
+            send_to: 'AW-16996247818/Tsv3CMifg54dEIrSuKg_',
+            value: 1.0,
+            currency: 'USD',
+          });
         }
 
         setStatus('success', "We'll get back to you as soon as possible.");
