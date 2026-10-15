@@ -49,11 +49,14 @@ export const services: Service[] = [
     ],
     gallery: [
       { src: '/images/hardscape-patio.jpg', alt: 'Paver patio with pergola and outdoor seating' },
+      { src: '/images/hardscape-fire-pit-river-rock.jpg', alt: 'Backyard fire pit area with river rock and a paver border next to the patio' },
       { src: '/images/landscape-costruction.png', alt: 'Curved beds with paver borders and red mulch along a stone home' },
       { src: '/images/front-walk-after.png', alt: 'Front walkway beds with new plantings and fresh mulch' },
       { src: '/images/front-corner-after-edited.png', alt: 'Front corner bed with a stone border and ornamental tree' },
       { src: '/images/mulch-trees-bricks.jpg', alt: 'Raised mulch bed with a block border and shaped shrubs' },
       { src: '/images/landscaping-project-after.jpg', alt: 'New side yard beds with plantings and mulch' },
+      { src: '/images/hardscape-site-prep-track-loader.jpg', alt: 'Yard Boys crew grading a backyard with a compact track loader' },
+      { src: '/images/hardscape-grading-along-patio.jpg', alt: 'Ground graded and prepped along a concrete patio, seen from above' },
     ],
     beforeAfter: [
       { before: '/images/landscaping-project-before.jpg', after: '/images/landscaping-project-after.jpg', label: 'Side yard bed install' },
@@ -123,8 +126,12 @@ export const services: Service[] = [
       { src: '/images/seasonal-cleanup-rake.png', alt: 'Fall leaf cleanup in a front yard' },
       { src: '/images/back-yard-clean-out-joe-one-leg-after-1.jpg', alt: 'Narrow back yard strip cleared and cleaned out' },
       { src: '/images/yard-cleanup-after.jpg', alt: 'Side yard after a seasonal cleanup' },
+      { src: '/images/leaf-cleanup-after.jpg', alt: 'Front lawn cleared of fall leaves under an orange maple' },
     ],
-    beforeAfter: [{ before: '/images/yard-cleanup-before.jpg', after: '/images/yard-cleanup-after.jpg', label: 'Side yard cleanup' }],
+    beforeAfter: [
+      { before: '/images/leaf-cleanup-before.jpg', after: '/images/leaf-cleanup-after.jpg', label: 'Fall leaf cleanup' },
+      { before: '/images/yard-cleanup-before.jpg', after: '/images/yard-cleanup-after.jpg', label: 'Side yard cleanup' },
+    ],
   },
   {
     id: 'mulch-delivery',
@@ -158,6 +165,10 @@ export const services: Service[] = [
       { src: '/images/finished-mulch-job.jpg', alt: 'Completed mulch job around front yard trees' },
       { src: '/images/finished-front-house.jpg', alt: 'Front yard beds finished with fresh mulch' },
       { src: '/images/mulch-bush-cleanup.jpg', alt: 'Trimmed shrubs and fresh mulch in a front bed' },
+      { src: '/images/flagpole-bed-after.jpg', alt: 'Flagpole bed with trimmed boxwoods, fresh black mulch, and a reset stone wall' },
+    ],
+    beforeAfter: [
+      { before: '/images/flagpole-bed-before.jpg', after: '/images/flagpole-bed-after.jpg', label: 'Flagpole bed refresh' },
     ],
   },
   {
@@ -200,6 +211,7 @@ export const services: Service[] = [
       { src: '/images/facade-5.png', alt: 'Shaped shrubs and ornamental tree in a front yard' },
       { src: '/images/mulch-bush-cleanup.jpg', alt: 'Freshly trimmed bushes with new mulch' },
       { src: '/images/overgrown-landscape-after.jpg', alt: 'Front beds after overgrown shrubs were cut back' },
+      { src: '/images/flagpole-bed-after.jpg', alt: 'Boxwoods trimmed into clean rounds in a flagpole bed' },
     ],
     beforeAfter: [
       { before: '/images/overgrown-landscape-before.jpg', after: '/images/overgrown-landscape-after.jpg', label: 'Overgrown front beds' },
@@ -301,8 +313,10 @@ export const services: Service[] = [
       { src: '/images/patio-overgrowth-after.jpg', alt: 'Paver patio cleared of overgrowth' },
       { src: '/images/overgrowth-cleanup-after.jpg', alt: 'Fence line cleared of dense overgrowth' },
       { src: '/images/back-yard-clean-out-joe-one-leg-after-1.jpg', alt: 'Back yard strip cleared out along a fence' },
+      { src: '/images/overgrown-house-after.jpg', alt: 'Side of a red house after overgrown trees and brush were cleared away' },
     ],
     beforeAfter: [
+      { before: '/images/overgrown-house-before.jpg', after: '/images/overgrown-house-after.jpg', label: 'Overgrowth cleared off the house' },
       { before: '/images/patio-overgrowth-before.jpg', after: '/images/patio-overgrowth-after.jpg', label: 'Patio overgrowth' },
       { before: '/images/land-clearing-before.jpg', after: '/images/land-clearing-after.jpg', label: 'Side yard clearing' },
       { before: '/images/overgrowth-cleanup-before.jpg', after: '/images/overgrowth-cleanup-after.jpg', label: 'Fence line overgrowth' },
