@@ -173,17 +173,68 @@ const serviceOptions = [
 
                 <div>
                   <label for="address" class="block text-charcoal-600 text-sm font-semibold mb-2">
-                    Address <span class="text-red-400">*</span>
+                    Street Address <span class="text-red-400">*</span>
                   </label>
                   <input
                     type="text"
                     id="address"
                     name="address"
                     required
-                    autocomplete="street-address"
+                    autocomplete="address-line1"
                     class="w-full px-4 py-3 bg-cream-50 border border-charcoal-100 rounded-xl text-charcoal-700 placeholder-charcoal-300 focus:outline-none focus:ring-2 focus:ring-forest-500/30 focus:border-forest-500 transition-all duration-300"
-                    placeholder="123 Main St, City, State"
+                    placeholder="123 Main St"
                   />
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                  <div>
+                    <label for="city" class="block text-charcoal-600 text-sm font-semibold mb-2">
+                      City <span class="text-red-400">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="city"
+                      name="city"
+                      required
+                      autocomplete="address-level2"
+                      class="w-full px-4 py-3 bg-cream-50 border border-charcoal-100 rounded-xl text-charcoal-700 placeholder-charcoal-300 focus:outline-none focus:ring-2 focus:ring-forest-500/30 focus:border-forest-500 transition-all duration-300"
+                      placeholder="Newtown"
+                    />
+                  </div>
+                  <div>
+                    <label for="state" class="block text-charcoal-600 text-sm font-semibold mb-2">
+                      State <span class="text-red-400">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="state"
+                      name="state"
+                      required
+                      value="PA"
+                      maxlength="2"
+                      autocomplete="address-level1"
+                      class="w-full px-4 py-3 bg-cream-50 border border-charcoal-100 rounded-xl text-charcoal-700 placeholder-charcoal-300 focus:outline-none focus:ring-2 focus:ring-forest-500/30 focus:border-forest-500 transition-all duration-300"
+                      placeholder="PA"
+                    />
+                  </div>
+                  <div>
+                    <label for="zip" class="block text-charcoal-600 text-sm font-semibold mb-2">
+                      Zip Code <span class="text-red-400">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="zip"
+                      name="zip"
+                      required
+                      inputmode="numeric"
+                      pattern="[0-9]{5}"
+                      maxlength="5"
+                      title="Please enter a 5 digit zip code"
+                      autocomplete="postal-code"
+                      class="w-full px-4 py-3 bg-cream-50 border border-charcoal-100 rounded-xl text-charcoal-700 placeholder-charcoal-300 focus:outline-none focus:ring-2 focus:ring-forest-500/30 focus:border-forest-500 transition-all duration-300"
+                      placeholder="18940"
+                    />
+                  </div>
                 </div>
 
                 <div>
@@ -307,6 +358,9 @@ const serviceOptions = [
     const fullNameInput = form.querySelector('#full-name') as HTMLInputElement | null;
     const hiddenPhoneInput = form.querySelector('#form-phone') as HTMLInputElement | null;
     const addressInput = form.querySelector('#address') as HTMLInputElement | null;
+    const cityInput = form.querySelector('#city') as HTMLInputElement | null;
+    const stateInput = form.querySelector('#state') as HTMLInputElement | null;
+    const zipInput = form.querySelector('#zip') as HTMLInputElement | null;
     const messageInput = form.querySelector('#message') as HTMLTextAreaElement | null;
     const serviceSelect = form.querySelector('#service') as HTMLSelectElement | null;
     const otherServiceWrapper = document.getElementById('other-service-wrapper');
@@ -343,6 +397,9 @@ const serviceOptions = [
       // is submitted alongside service="Other" — both appear in the Formspree email.
 
       if (addressInput) addressInput.value = addressInput.value.trim();
+      if (cityInput) cityInput.value = cityInput.value.trim();
+      if (stateInput) stateInput.value = stateInput.value.trim().toUpperCase();
+      if (zipInput) zipInput.value = zipInput.value.trim();
       if (messageInput) messageInput.value = messageInput.value.trim();
     };
 
